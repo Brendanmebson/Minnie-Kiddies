@@ -11,12 +11,12 @@ export default function MeetSection() {
       </div>
       <div className="mk-meet-photos">
         <img
-          src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=400&h=500&fit=crop&q=85"
+          src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=700&h=900&fit=crop&q=85"
           alt="Minnie Kiddies store front"
           className="mk-meet-photo"
         />
         <img
-          src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=400&h=500&fit=crop&q=85"
+          src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=700&h=900&fit=crop&q=85"
           alt="Happy family with school supplies"
           className="mk-meet-photo"
         />
@@ -45,11 +45,12 @@ export default function MeetSection() {
           margin: 0;
         }
         .mk-meet-photos {
-          display: flex;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 12px;
         }
         .mk-meet-photo {
-          flex: 1;
+          width: 100%;
           aspect-ratio: 4 / 5;
           object-fit: cover;
           border-radius: 10px;
@@ -58,9 +59,12 @@ export default function MeetSection() {
         @media (max-width: 760px) {
           .mk-meet {
             grid-template-columns: 1fr;
+            padding: 32px 20px;
           }
           .mk-meet-photos {
             order: -1;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
           }
         }
       `}</style>

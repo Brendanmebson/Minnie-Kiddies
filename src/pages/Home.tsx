@@ -36,6 +36,7 @@ const collections = [
   { Icon: BackpackIcon, label: 'Back 2 School' },
   { Icon: MegaphoneIcon, label: 'New Arrivals' },
   { Icon: ReviewBadgeIcon, label: 'Reviews' },
+  { Icon: ReviewBadgeIcon, label: 'Best Sellers' },
 ]
 
 export default function Home() {
