@@ -74,10 +74,6 @@ export default function Collections() {
               >
                 <div className="mk-coll-img-wrap">
                   <img src={cat.image} alt={cat.label} />
-                  <div
-                    className="mk-coll-overlay"
-                    style={{ background: `${cat.color}cc` }}
-                  />
                   <div className="mk-coll-card-content">
                     <div className="mk-coll-count">{count} items</div>
                     <h2 className="mk-coll-name">{cat.label}</h2>
@@ -147,14 +143,6 @@ export default function Collections() {
         .mk-coll-card:hover .mk-coll-img-wrap img {
           transform: scale(1.06);
         }
-        .mk-coll-overlay {
-          position: absolute;
-          inset: 0;
-          transition: opacity 0.3s;
-        }
-        .mk-coll-card:hover .mk-coll-overlay {
-          opacity: 0.85;
-        }
         .mk-coll-card-content {
           position: absolute;
           inset: 0;
@@ -162,6 +150,7 @@ export default function Collections() {
           flex-direction: column;
           justify-content: flex-end;
           padding: 24px;
+          background: linear-gradient(180deg, rgba(18, 12, 24, 0.08) 0%, rgba(18, 12, 24, 0.68) 100%);
         }
         .mk-coll-count {
           font-size: 12px;
