@@ -166,7 +166,7 @@ export const shopAllProducts: Product[] = [
     priceNum: 12000,
     category: 'New Arrivals',
     image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=600&fit=crop&q=80',
-    description: 'Unleash your child\\'s creativity with this premium art supplies kit. Includes coloured pencils, crayons, watercolours, and brushes all in one carry case.',
+    description: "Unleash your child's creativity with this premium art supplies kit. Includes coloured pencils, crayons, watercolours, and brushes all in one carry case.",
     features: ['48-piece set', 'Includes carry case', 'Non-toxic materials', 'Vivid colour pigments', 'Suitable ages 4–12'],
     colors: ['Multicolour'],
     gradient: 'linear-gradient(135deg,#EC407A,#F06292)',

@@ -1,4 +1,4 @@
-import { useState, useMemo, type CSSProperties } from 'react'
+import { useState, useMemo } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { shopAllProducts } from '../data/products'
 import ProductCard from '../components/ProductCard'
@@ -367,12 +367,4 @@ export default function ShopAll() {
       `}</style>
     </div>
   )
-}
-
-const _selectStyle: CSSProperties = {
-  border: '1px solid var(--mk-border)',
-  borderRadius: 6,
-  padding: '8px 10px',
-  fontSize: 13,
-  color: 'var(----mk-grey)',
 }
