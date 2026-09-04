@@ -6,43 +6,81 @@ export default function ReviewPopup() {
   if (!visible) return null
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        bottom: 90,
-        right: 22,
-        width: 240,
-        background: '#fff',
-        borderRadius: 10,
-        boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
-        padding: 14,
-        zIndex: 39,
-      }}
-    >
+    <div className="mk-review-popup">
       <button
         onClick={() => setVisible(false)}
-        aria-label="Close"
-        style={{ position: 'absolute', top: 8, right: 8, background: 'none', border: 'none', color: 'var(--mk-grey)' }}
+        aria-label="Close review"
+        className="mk-review-close"
       >
         <FiX size={14} />
       </button>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-        <div
-          style={{
-            width: 26,
-            height: 26,
-            borderRadius: '50%',
-            background: 'var(--mk-purple-light)',
-          }}
+
+      <div className="mk-review-header">
+        <img
+          src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&h=80&fit=crop&q=80"
+          alt="Client avatar"
+          className="mk-review-avatar"
         />
-        <strong style={{ fontSize: 13 }}>Client Review</strong>
+        <strong>Client Review</strong>
       </div>
-      <p style={{ fontSize: 12, color: 'var(--mk-grey)', margin: '0 0 4px', lineHeight: 1.5 }}>
-        The quality was excellent and our customer and community loved every piece.
+
+      <p className="mk-review-body">
+        I had with sales good quality products was assured our customer and community with sea approachani...
       </p>
-      <span style={{ fontSize: 12, color: 'var(--mk-purple)', fontWeight: 600, cursor: 'pointer' }}>
-        Read more
-      </span>
+      <span className="mk-review-read-more">Read more</span>
+
+      <style>{`
+        .mk-review-popup {
+          position: fixed;
+          bottom: 90px;
+          right: 20px;
+          width: 230px;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+          padding: 14px;
+          z-index: 39;
+        }
+        .mk-review-close {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background: none;
+          border: none;
+          color: var(--mk-grey);
+          cursor: pointer;
+          padding: 2px;
+          line-height: 1;
+        }
+        .mk-review-header {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 8px;
+        }
+        .mk-review-avatar {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          object-fit: cover;
+          flex-shrink: 0;
+        }
+        .mk-review-header strong {
+          font-size: 13px;
+        }
+        .mk-review-body {
+          font-size: 12px;
+          color: var(--mk-grey);
+          margin: 0 0 6px;
+          line-height: 1.55;
+        }
+        .mk-review-read-more {
+          font-size: 12px;
+          color: var(--mk-purple);
+          font-weight: 600;
+          cursor: pointer;
+        }
+      `}</style>
     </div>
   )
 }
