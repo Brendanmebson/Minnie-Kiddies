@@ -1,0 +1,45 @@
+:root {
+  --mk-purple: #5B2C8F;
+  --mk-purple-dark: #3E1C63;
+  --mk-purple-light: #E4DEF5;
+  --mk-lavender-bar: #C9BEEC;
+  --mk-pink: #F4C6D7;
+  --mk-ink: #1B1B1F;
+  --mk-grey: #6B6B72;
+  --mk-border: #EAEAEE;
+  --mk-font: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--mk-font);
+  color: var(--mk-ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
