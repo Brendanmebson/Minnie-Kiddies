@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard'
 import ReviewPopup from '../components/ReviewPopup'
 import { FiFilter } from 'react-icons/fi'
 
-const CATEGORIES = ['All', 'Back 2 School', 'New Arrivals', 'Girls', 'Shoes']
+const CATEGORIES = ['All', 'Back 2 School', 'New Arrivals', 'Girls', 'Shoes', 'Lunch & Drinks', 'Art & Stationery']
 const PAGE_SIZE = 12
 
 type SortKey = 'default' | 'price-asc' | 'price-desc' | 'name'
@@ -359,10 +359,14 @@ export default function ShopAll() {
           .mk-shop-products { padding: 20px 0 0; }
           .mk-shop-header { padding: 24px 20px 16px; }
           .mk-mobile-filter-bar { display: flex; }
-          .mk-shop-grid { grid-template-columns: repeat(2, 1fr); }
+          .mk-shop-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
-        @media (max-width: 420px) {
-          .mk-shop-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        @media (max-width: 480px) {
+          .mk-shop-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+          .mk-shop-layout { padding-left: 12px; padding-right: 12px; }
+          .mk-shop-products { padding-left: 0; }
+          .mk-product-name { font-size: 12px; }
+          .mk-product-price { font-size: 13px; }
         }
       `}</style>
     </div>

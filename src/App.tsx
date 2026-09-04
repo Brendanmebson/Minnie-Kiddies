@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { CartProvider } from './context/cart'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -11,9 +12,20 @@ import Checkout from './pages/Checkout'
 import Collections from './pages/Collections'
 import Contact from './pages/Contact'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior })
+  }, [pathname])
+
+  return null
+}
+
 export default function App() {
   return (
     <CartProvider>
+      <ScrollToTop />
       <Navbar />
       <main style={{ flex: 1 }}>
         <Routes>

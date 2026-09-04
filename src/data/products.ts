@@ -1,10 +1,10 @@
 export type Product = {
   id: string
   name: string
-  price: string        // display string e.g. "₦15,000"
-  priceNum: number     // numeric for sorting/calculations e.g. 15000
+  price: string
+  priceNum: number
   image: string
-  images?: string[]    // additional gallery images
+  images?: string[]
   category: string
   description: string
   features: string[]
@@ -24,6 +24,7 @@ export const topProducts: Product[] = [
     images: [
       'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=600&h=600&fit=crop&q=80',
       'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1581605405669-fcdf81165afa?w=600&h=600&fit=crop&q=80',
     ],
     description: 'The ultimate gaming-themed backpack set for your little champion. Comes with a matching lunch box and pencil case — everything your child needs for a fun school year.',
     features: ['Water-resistant material', 'Padded back support', 'Includes lunch box & pencil case', 'Multiple compartments', 'Adjustable shoulder straps'],
@@ -41,6 +42,7 @@ export const topProducts: Product[] = [
     images: [
       'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop&q=80',
       'https://images.unsplash.com/photo-1581605405669-fcdf81165afa?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&h=600&fit=crop&q=80',
     ],
     description: 'Blast off into a new school year with this galaxy-inspired backpack set. Features glow-in-the-dark accents and a spaceship-themed lunch box that kids absolutely love.',
     features: ['Glow-in-the-dark accents', 'Laptop compartment', 'Includes lunch box & bottle holder', 'Reflective safety strips', 'Heavy-duty zips'],
@@ -58,6 +60,7 @@ export const topProducts: Product[] = [
     images: [
       'https://images.unsplash.com/photo-1581605405669-fcdf81165afa?w=600&h=600&fit=crop&q=80',
       'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=600&h=600&fit=crop&q=80',
     ],
     description: 'For the little football star in your life. This soccer-themed set includes a backpack, lunch box, and water bottle — all covered in your favourite football club colours.',
     features: ['Football-themed design', 'Ergonomic back panel', 'Includes lunch box & water bottle', 'Side mesh pockets', 'Durable polyester fabric'],
@@ -75,6 +78,7 @@ export const topProducts: Product[] = [
     images: [
       'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&h=600&fit=crop&q=80',
       'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop&q=80',
     ],
     description: 'A deep-space adventure in a backpack. This explorer set is perfect for curious minds who love learning about the universe. Matching lunch box and pencil pouch included.',
     features: ['Rocket ship embroidery', 'Large main compartment', 'Includes pencil pouch', 'Breathable back mesh', 'Chest strap for stability'],
@@ -92,6 +96,7 @@ export const topProducts: Product[] = [
     images: [
       'https://images.unsplash.com/photo-1600359756070-f9e7a3ed9aa9?w=600&h=600&fit=crop&q=80',
       'https://images.unsplash.com/photo-1580087256394-dc596e1c8f4f?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=600&fit=crop&q=80',
     ],
     description: 'Make a splash at school with this magical mermaid-themed set. Shimmering pastel colours, glitter accents, and a cute mermaid print that every girl will adore.',
     features: ['Shimmering glitter fabric', 'Built-in key clip', 'Includes lunch box & pencil case', 'Side bottle pockets', 'Secure top handle'],
@@ -109,6 +114,7 @@ export const topProducts: Product[] = [
     images: [
       'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop&q=80',
       'https://images.unsplash.com/photo-1535043934128-cf0b28d52f95?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&h=600&fit=crop&q=80',
     ],
     description: 'Smart, durable school shoes built for active boys. Non-slip soles, easy velcro fastening, and breathable lining keep feet comfortable from morning assembly to the last bell.',
     features: ['Non-slip rubber sole', 'Velcro fastening', 'Breathable inner lining', 'Scuff-resistant toe cap', 'Available sizes 28–38'],
@@ -127,6 +133,11 @@ export const shopAllProducts: Product[] = [
     priceNum: 15000,
     category: 'Girls',
     image: 'https://images.unsplash.com/photo-1580087256394-dc596e1c8f4f?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1580087256394-dc596e1c8f4f?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1600359756070-f9e7a3ed9aa9?w=600&h=600&fit=crop&q=80',
+    ],
     description: 'A royal pink backpack fit for a princess. Comes with a matching accessory pouch and has enough room for all school essentials.',
     features: ['Crown emblem badge', 'Roomy main compartment', 'Includes accessory pouch', 'Padded straps', 'Glitter zipper pulls'],
     colors: ['Pink', 'Rose Gold'],
@@ -138,8 +149,13 @@ export const shopAllProducts: Product[] = [
     name: 'Cool Camo Lunchbox',
     price: '₦8,000',
     priceNum: 8000,
-    category: 'New Arrivals',
+    category: 'Lunch & Drinks',
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=600&h=600&fit=crop&q=80',
+    ],
     description: 'Keep lunch fresh and cool with this insulated camo-print lunch box. Perfect for boys who love the outdoors.',
     features: ['Insulated lining', 'Easy-clean interior', 'Includes ice pack holder', 'Durable zipper', 'Shoulder strap included'],
     colors: ['Green Camo', 'Blue Camo'],
@@ -151,8 +167,13 @@ export const shopAllProducts: Product[] = [
     name: 'Dinosaur Water Bottle',
     price: '₦3,500',
     priceNum: 3500,
-    category: 'Back 2 School',
+    category: 'Lunch & Drinks',
     image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop&q=80',
+    ],
     description: 'Roar into the school day with this fun dinosaur-themed stainless steel water bottle. Keeps drinks cold for 12 hours.',
     features: ['Stainless steel', 'Keeps cold 12 hours', 'Leak-proof lid', 'BPA-free', '500ml capacity'],
     colors: ['Green', 'Teal'],
@@ -164,8 +185,13 @@ export const shopAllProducts: Product[] = [
     name: 'Art Supplies Kit',
     price: '₦12,000',
     priceNum: 12000,
-    category: 'New Arrivals',
+    category: 'Art & Stationery',
     image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&h=600&fit=crop&q=80',
+    ],
     description: "Unleash your child's creativity with this premium art supplies kit. Includes coloured pencils, crayons, watercolours, and brushes all in one carry case.",
     features: ['48-piece set', 'Includes carry case', 'Non-toxic materials', 'Vivid colour pigments', 'Suitable ages 4–12'],
     colors: ['Multicolour'],
@@ -177,8 +203,13 @@ export const shopAllProducts: Product[] = [
     name: 'Math Geometry Set',
     price: '₦5,000',
     priceNum: 5000,
-    category: 'Back 2 School',
+    category: 'Art & Stationery',
     image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=600&fit=crop&q=80',
+    ],
     description: 'A complete geometry set for primary and secondary school students. Includes compass, ruler, protractor, set squares and more in a sturdy metal tin.',
     features: ['10-piece set', 'Metal tin case', 'Precision compass', 'Transparent ruler & protractor', 'Suitable JS1–SS3'],
     colors: ['Silver', 'Gold'],
@@ -192,10 +223,105 @@ export const shopAllProducts: Product[] = [
     priceNum: 18000,
     category: 'Shoes',
     image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1535043934128-cf0b28d52f95?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&h=600&fit=crop&q=80',
+    ],
     description: 'Comfortable, durable sneakers designed for the school yard. Breathable mesh upper, cushioned insole, and a white sole that keeps its colour.',
     features: ['Breathable mesh upper', 'Cushioned insole', 'Rubber grip sole', 'Easy-lace system', 'Available sizes 29–42'],
     colors: ['White/Navy', 'White/Black', 'All White'],
     gradient: 'linear-gradient(135deg,#1A237E,#0D1350)',
+    emoji: '👟',
+  },
+  {
+    id: 'rainbow-pouch',
+    name: 'Rainbow Pencil Pouch',
+    price: '₦4,500',
+    priceNum: 4500,
+    category: 'Art & Stationery',
+    image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=600&fit=crop&q=80',
+    ],
+    description: 'A colourful zipped pencil pouch for the classroom, with plenty of room for pens, rulers, and erasers.',
+    features: ['Large zip compartment', 'Lightweight fabric', 'Easy-clean finish', 'Cute rainbow print', 'Fits all school essentials'],
+    colors: ['Rainbow', 'Pastel Pink'],
+    gradient: 'linear-gradient(135deg,#FF8A65,#F48FB1)',
+    emoji: '🎒',
+  },
+  {
+    id: 'unicorn-backpack',
+    name: 'Unicorn Mini Backpack',
+    price: '₦11,500',
+    priceNum: 11500,
+    category: 'Girls',
+    image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1580087256394-dc596e1c8f4f?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1600359756070-f9e7a3ed9aa9?w=600&h=600&fit=crop&q=80',
+    ],
+    description: 'A smaller magic backpack designed for little girls who love sparkle, colour, and a touch of fantasy.',
+    features: ['Cute unicorn graphic', 'Soft padded straps', 'Front zip pocket', 'Roomy compartments', 'Lightweight construction'],
+    colors: ['Pink', 'Purple'],
+    gradient: 'linear-gradient(135deg,#BA68C8,#D1C4E9)',
+    emoji: '🦄',
+  },
+  {
+    id: 'sunny-lunchset',
+    name: 'Sunny Lunch Set',
+    price: '₦9,500',
+    priceNum: 9500,
+    category: 'Lunch & Drinks',
+    image: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&h=600&fit=crop&q=80',
+    ],
+    description: 'A cheerful lunch bag and bottle set that keeps snacks fresh while adding a little sunshine to the school day.',
+    features: ['Insulated lunch compartment', 'Leak-proof bottle', 'Easy-carry handle', 'Durable fabric', 'Easy-clean interior'],
+    colors: ['Yellow', 'Orange'],
+    gradient: 'linear-gradient(135deg,#FFD54F,#FFB300)',
+    emoji: '🌞',
+  },
+  {
+    id: 'camp-bag',
+    name: 'Camp Adventure Pack',
+    price: '₦17,500',
+    priceNum: 17500,
+    category: 'Back 2 School',
+    image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=600&h=600&fit=crop&q=80',
+    ],
+    description: 'Built for busy school weeks and weekend adventures, this sturdy pack is roomy, rugged, and ready for anything.',
+    features: ['Extra-wide front pocket', 'Waterproof base', 'Side bottle holder', 'Strong zips', 'Comfortable carrying straps'],
+    colors: ['Forest Green', 'Khaki'],
+    gradient: 'linear-gradient(135deg,#2E7D32,#6D8F4A)',
+    emoji: '🎒',
+  },
+  {
+    id: 'spark-shoes',
+    name: 'Spark Girls Sneakers',
+    price: '₦19,500',
+    priceNum: 19500,
+    category: 'Shoes',
+    image: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&h=600&fit=crop&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1535043934128-cf0b28d52f95?w=600&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop&q=80',
+    ],
+    description: 'A lightweight everyday sneaker with cushioned comfort and a bright finish that lets girls express their style.',
+    features: ['Cushioned foam sole', 'Mesh upper', 'Hook-and-loop fastening', 'Colourful accents', 'Flexible fit'],
+    colors: ['White/Pink', 'White/Lilac'],
+    gradient: 'linear-gradient(135deg,#F48FB1,#B39DDB)',
     emoji: '👟',
   },
 ]

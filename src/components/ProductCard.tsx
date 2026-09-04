@@ -38,6 +38,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <style>{`
         .mk-product-card {
           display: block;
+          width: 100%;
           cursor: pointer;
           text-decoration: none;
           color: inherit;
@@ -48,6 +49,7 @@ export default function ProductCard({ product }: { product: Product }) {
           overflow: hidden;
           background: #f5f5f5;
           transition: box-shadow 0.2s, transform 0.2s;
+          width: 100%;
         }
         .mk-product-img-wrap img {
           width: 100%;

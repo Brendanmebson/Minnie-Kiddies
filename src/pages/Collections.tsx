@@ -34,6 +34,22 @@ const categories = [
     filter: 'Shoes',
     color: '#1B1B1F',
   },
+  {
+    id: 'lunch-drinks',
+    label: 'Lunch & Drinks',
+    description: 'Fresh, fun food containers and bottles for every school day',
+    image: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=600&h=700&fit=crop&q=85',
+    filter: 'Lunch & Drinks',
+    color: '#D9781E',
+  },
+  {
+    id: 'art-stationery',
+    label: 'Art & Stationery',
+    description: 'Creative kits and classroom essentials for curious minds',
+    image: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&h=700&fit=crop&q=85',
+    filter: 'Art & Stationery',
+    color: '#2A7F62',
+  },
 ]
 
 export default function Collections() {
