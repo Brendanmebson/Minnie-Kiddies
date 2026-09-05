@@ -1,6 +1,15 @@
 import { Link } from 'react-router-dom'
 import { shopAllProducts } from '../data/products'
 
+const innerCategoryLinks = [
+  { label: 'All Products', to: '/shop' },
+  { label: 'Backpacks', to: '/shop?category=Back%202%20School' },
+  { label: 'Lunch & Drinks', to: '/shop?category=Lunch%20%26%20Drinks' },
+  { label: 'Stationery', to: '/shop?category=Art%20%26%20Stationery' },
+  { label: 'Shoes', to: '/shop?category=Shoes' },
+  { label: 'Girls', to: '/shop?category=Girls' },
+]
+
 const categories = [
   {
     id: 'back-2-school',
@@ -61,6 +70,14 @@ export default function Collections() {
         <p>Shop by category and find exactly what your child needs.</p>
       </section>
 
+      <div className="mk-coll-subnav">
+        {innerCategoryLinks.map((item) => (
+          <Link key={item.label} to={item.to} className="mk-coll-subnav-link">
+            {item.label}
+          </Link>
+        ))}
+      </div>
+
       {/* Category grid */}
       <section className="mk-coll-grid-section">
         <div className="mk-coll-grid">
@@ -111,6 +128,31 @@ export default function Collections() {
           margin: 0;
         }
 
+        .mk-coll-subnav {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          justify-content: center;
+          padding: 28px 20px 0;
+          max-width: 1100px;
+          margin: 0 auto;
+        }
+        .mk-coll-subnav-link {
+          text-decoration: none;
+          color: var(--mk-ink);
+          background: #fff;
+          border: 1px solid var(--mk-border);
+          border-radius: 999px;
+          padding: 8px 14px;
+          font-size: 12px;
+          font-weight: 600;
+          transition: all 0.15s ease;
+        }
+        .mk-coll-subnav-link:hover {
+          border-color: var(--mk-purple);
+          color: var(--mk-purple);
+          background: var(--mk-purple-light);
+        }
         .mk-coll-grid-section {
           padding: 48px 40px;
           max-width: 1100px;

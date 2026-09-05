@@ -1,6 +1,6 @@
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { FiShoppingCart, FiMenu, FiX } from 'react-icons/fi'
+import { FiShoppingCart, FiMenu, FiX, FiSearch } from 'react-icons/fi'
 import Logo from './Logo'
 import { useCart } from '../context/cart'
 
@@ -14,7 +14,19 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const navigate = useNavigate()
   const { count } = useCart()
+
+  const handleSearch = (value: string) => {
+    const clean = value.trim()
+    setQuery(clean)
+    if (clean) {
+      navigate(`/shop?q=${encodeURIComponent(clean)}`)
+    } else {
+      navigate('/shop')
+    }
+  }
 
   return (
     <header className="mk-header">
@@ -41,6 +53,19 @@ export default function Navbar() {
           ))}
         </nav>
 
+        <div className="mk-nav-search">
+          <FiSearch size={15} />
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSearch(query)
+            }}
+            placeholder="Search products..."
+            aria-label="Search products"
+          />
+        </div>
+
         <div className="mk-nav-actions">
           <Link to="/checkout" className="mk-cart-btn" aria-label="Cart">
             <FiShoppingCart size={20} />
@@ -59,6 +84,21 @@ export default function Navbar() {
       {/* Mobile nav */}
       {open && (
         <nav className="mk-mobile-nav">
+          <div className="mk-mobile-search">
+            <FiSearch size={15} />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setOpen(false)
+                  handleSearch(query)
+                }
+              }}
+              placeholder="Search products..."
+              aria-label="Search mobile products"
+            />
+          </div>
           {links.map((l) => (
             <NavLink
               key={l.to}
@@ -102,6 +142,31 @@ export default function Navbar() {
           justify-content: space-between;
           padding: 12px 40px;
           gap: 16px;
+        }
+        .mk-nav-search {
+          width: min(38vw, 360px);
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: #f8f4ff;
+          border: 1px solid var(--mk-border);
+          border-radius: 999px;
+          padding: 8px 14px;
+          color: var(--mk-grey);
+        }
+        .mk-nav-search input,
+        .mk-mobile-search input {
+          width: 100%;
+          border: none;
+          outline: none;
+          background: transparent;
+          font-size: 14px;
+          font-family: inherit;
+          color: var(--mk-ink);
+        }
+        .mk-nav-search input::placeholder,
+        .mk-mobile-search input::placeholder {
+          color: #8a7d99;
         }
         .mk-desktop-nav {
           display: flex;
@@ -169,6 +234,17 @@ export default function Navbar() {
           gap: 0;
           background: #fff;
         }
+        .mk-mobile-search {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: #f8f4ff;
+          border: 1px solid var(--mk-border);
+          border-radius: 999px;
+          padding: 8px 12px;
+          margin: 8px 0 12px;
+          color: var(--mk-grey);
+        }
         .mk-mobile-link {
           padding: 12px 0;
           font-size: 15px;
@@ -181,9 +257,9 @@ export default function Navbar() {
         }
         @media (max-width: 860px) {
           .mk-desktop-nav { display: none; }
-          .mk-cart-btn { display: none; }
           .mk-mobile-toggle { display: block; }
           .mk-nav-inner { padding: 12px 20px; }
+          .mk-nav-search { display: none; }
         }
       `}</style>
     </header>

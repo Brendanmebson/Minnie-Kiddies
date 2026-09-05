@@ -1,9 +1,9 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { shopAllProducts } from '../data/products'
 import ProductCard from '../components/ProductCard'
 import ReviewPopup from '../components/ReviewPopup'
-import { FiFilter } from 'react-icons/fi'
+import { FiFilter, FiSearch, FiX } from 'react-icons/fi'
 
 const CATEGORIES = ['All', 'Back 2 School', 'New Arrivals', 'Girls', 'Shoes', 'Lunch & Drinks', 'Art & Stationery']
 const PAGE_SIZE = 12
@@ -11,27 +11,62 @@ const PAGE_SIZE = 12
 type SortKey = 'default' | 'price-asc' | 'price-desc' | 'name'
 
 export default function ShopAll() {
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const urlCategory = searchParams.get('category') ?? 'All'
+  const initialQuery = searchParams.get('q') ?? ''
 
   const [activeCategory, setActiveCategory] = useState(
     CATEGORIES.includes(urlCategory) ? urlCategory : 'All'
   )
+  const [searchTerm, setSearchTerm] = useState(initialQuery)
   const [sort, setSort] = useState<SortKey>('default')
   const [page, setPage] = useState(1)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+  useEffect(() => {
+    setSearchTerm(initialQuery)
+  }, [initialQuery])
+
+  useEffect(() => {
+    setPage(1)
+  }, [activeCategory, searchTerm, sort])
+
+  const updateSearch = (value: string) => {
+    const clean = value.trim()
+    setSearchTerm(clean)
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev)
+      if (clean) next.set('q', clean)
+      else next.delete('q')
+      return next
+    })
+  }
 
   const filtered = useMemo(() => {
     let list = activeCategory === 'All'
       ? shopAllProducts
       : shopAllProducts.filter((p) => p.category === activeCategory)
 
+    const query = searchTerm.trim().toLowerCase()
+    if (query) {
+      list = list.filter((p) => {
+        const haystack = [
+          p.name,
+          p.category,
+          p.description,
+          p.features.join(' '),
+          p.colors?.join(' ') ?? '',
+        ].join(' ').toLowerCase()
+        return haystack.includes(query)
+      })
+    }
+
     if (sort === 'price-asc') list = [...list].sort((a, b) => a.priceNum - b.priceNum)
     else if (sort === 'price-desc') list = [...list].sort((a, b) => b.priceNum - a.priceNum)
     else if (sort === 'name') list = [...list].sort((a, b) => a.name.localeCompare(b.name))
 
     return list
-  }, [activeCategory, sort])
+  }, [activeCategory, searchTerm, sort])
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const pageItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
@@ -51,6 +86,23 @@ export default function ShopAll() {
         </div>
         <Link to="/collections" className="mk-view-collections-link">View Collections →</Link>
       </section>
+
+      <div className="mk-shop-toolbar">
+        <div className="mk-search-box">
+          <FiSearch size={15} />
+          <input
+            value={searchTerm}
+            onChange={(event) => updateSearch(event.target.value)}
+            placeholder="Search backpacks, shoes, lunch kits..."
+            aria-label="Search products"
+          />
+          {searchTerm && (
+            <button type="button" className="mk-search-clear" onClick={() => updateSearch('')} aria-label="Clear search">
+              <FiX size={14} />
+            </button>
+          )}
+        </div>
+      </div>
 
       <div className="mk-shop-layout">
         {/* Sidebar filters — desktop */}
@@ -173,6 +225,44 @@ export default function ShopAll() {
       <ReviewPopup />
 
       <style>{`
+        .mk-shop-toolbar {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 20px 40px 0;
+        }
+        .mk-search-box {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          width: min(100%, 560px);
+          background: #f8f4ff;
+          border: 1px solid var(--mk-border);
+          border-radius: 999px;
+          padding: 10px 14px;
+          color: var(--mk-grey);
+        }
+        .mk-search-box input {
+          flex: 1;
+          border: none;
+          outline: none;
+          background: transparent;
+          font-size: 14px;
+          font-family: inherit;
+          color: var(--mk-ink);
+        }
+        .mk-search-box input::placeholder {
+          color: #8a7d99;
+        }
+        .mk-search-clear {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: transparent;
+          border: none;
+          color: var(--mk-grey);
+          cursor: pointer;
+          padding: 4px;
+        }
         .mk-shop-header {
           display: flex;
           align-items: center;

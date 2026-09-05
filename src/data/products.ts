@@ -60,7 +60,7 @@ const variantNames = ['Classic', 'Plus', 'Max', 'Glow', 'Mini', 'Hero', 'Dream',
 const formatPrice = (value: number) => `₦${value.toLocaleString('en-NG')}`
 
 const buildCatalog = (): Product[] => {
-  const total = 54
+  const total = 100
   const items: Product[] = []
 
   for (let i = 0; i < total; i += 1) {
