@@ -84,11 +84,13 @@ export default function Checkout() {
 
   if (items.length === 0) {
     return (
-      <div className="mk-empty-cart">
-        <div style={{ fontSize: 56 }}>🛒</div>
-        <h2>Your cart is empty</h2>
-        <p>Browse our products and add something great for your little one.</p>
-        <Link to="/shop" className="mk-btn-primary">Shop Now</Link>
+      <div className="mk-empty-cart-wrap">
+        <div className="mk-empty-cart">
+          <div style={{ fontSize: 56 }}>🛒</div>
+          <h2>Your cart is empty</h2>
+          <p>Browse our products and add something great for your little one.</p>
+          <Link to="/shop" className="mk-btn-primary">Shop Now</Link>
+        </div>
       </div>
     )
   }
@@ -304,6 +306,38 @@ export default function Checkout() {
       </div>
 
       <style>{`
+        .mk-empty-cart-wrap {
+          min-height: calc(100vh - 120px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 40px 20px;
+        }
+        .mk-empty-cart {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          max-width: 520px;
+          padding: 48px 26px;
+          border: 1px solid var(--mk-border);
+          border-radius: 18px;
+          background: #fff;
+          box-shadow: 0 10px 30px rgba(91, 44, 143, 0.06);
+        }
+        .mk-empty-cart h2 {
+          margin: 12px 0 8px;
+          font-size: clamp(28px, 3vw, 36px);
+          font-weight: 800;
+          color: var(--mk-ink);
+        }
+        .mk-empty-cart p {
+          margin: 0 0 20px;
+          color: var(--mk-grey);
+          font-size: 15px;
+          line-height: 1.6;
+        }
         .mk-checkout-header {
           display: flex;
           align-items: center;
