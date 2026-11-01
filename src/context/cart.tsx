@@ -1,16 +1,20 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import type { Product } from '../data/products'
+import { getProductById, type Product } from '../data/products'
 
 export type CartItem = {
+  key: string
   product: Product
+  color: string
   quantity: number
 }
 
+type SavedLine = { id: string; color: string; quantity: number }
+
 type CartContextValue = {
   items: CartItem[]
-  addToCart: (product: Product, qty?: number) => void
-  removeFromCart: (id: string) => void
-  updateQty: (id: string, qty: number) => void
+  addToCart: (product: Product, qty?: number, color?: string) => void
+  removeFromCart: (key: string) => void
+  updateQty: (key: string, qty: number) => void
   clearCart: () => void
   total: number
   count: number
@@ -18,43 +22,52 @@ type CartContextValue = {
 
 const CartContext = createContext<CartContextValue | null>(null)
 
-const STORAGE_KEY = 'mk-cart'
+const STORAGE_KEY = 'mk-cart-v2'
+
+const lineKey = (id: string, color: string) => `${id}::${color}`
+
+const readSavedCart = (): CartItem[] => {
+  try {
+    const saved: SavedLine[] = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]')
+    return saved.flatMap(({ id, color, quantity }) => {
+      const product = getProductById(id)
+      return product ? [{ key: lineKey(id, color), product, color, quantity }] : []
+    })
+  } catch {
+    return []
+  }
+}
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY)
-      return saved ? JSON.parse(saved) : []
-    } catch {
-      return []
-    }
-  })
+  const [items, setItems] = useState<CartItem[]>(readSavedCart)
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
+    const lines: SavedLine[] = items.map(({ product, color, quantity }) => ({ id: product.id, color, quantity }))
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(lines))
+    } catch {
+      // Private browsing can block storage; the bag still works until the tab closes.
+    }
   }, [items])
 
-  const addToCart = (product: Product, qty = 1) => {
+  const addToCart = (product: Product, qty = 1, color = product.colors[0]) => {
+    const key = lineKey(product.id, color)
     setItems((prev) => {
-      const existing = prev.find((i) => i.product.id === product.id)
+      const existing = prev.find((i) => i.key === key)
       if (existing) {
-        return prev.map((i) =>
-          i.product.id === product.id ? { ...i, quantity: i.quantity + qty } : i
-        )
+        return prev.map((i) => (i.key === key ? { ...i, quantity: i.quantity + qty } : i))
       }
-      return [...prev, { product, quantity: qty }]
+      return [...prev, { key, product, color, quantity: qty }]
     })
   }
 
-  const removeFromCart = (id: string) => {
-    setItems((prev) => prev.filter((i) => i.product.id !== id))
+  const removeFromCart = (key: string) => {
+    setItems((prev) => prev.filter((i) => i.key !== key))
   }
 
-  const updateQty = (id: string, qty: number) => {
-    if (qty < 1) return removeFromCart(id)
-    setItems((prev) =>
-      prev.map((i) => (i.product.id === id ? { ...i, quantity: qty } : i))
-    )
+  const updateQty = (key: string, qty: number) => {
+    if (qty < 1) return removeFromCart(key)
+    setItems((prev) => prev.map((i) => (i.key === key ? { ...i, quantity: qty } : i)))
   }
 
   const clearCart = () => setItems([])

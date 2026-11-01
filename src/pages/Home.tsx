@@ -1,410 +1,187 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { shopAllProducts } from '../data/products'
+import { FiArrowRight } from 'react-icons/fi'
+import { FaWhatsapp } from 'react-icons/fa'
+import ProductArt from '../components/ProductArt'
 import ProductCard from '../components/ProductCard'
-import MeetSection from '../components/MeetSection'
-import ReviewPopup from '../components/ReviewPopup'
-import BentoSpotlight from '../components/BentoSpotlight'
+import Reveal from '../components/Reveal'
+import SchoolList from '../components/SchoolList'
+import { collections, getProductById, inCollection, shopAllProducts } from '../data/products'
+import { formatNaira, site, whatsappLink } from '../data/site'
+import { usePageTitle } from '../hooks/usePageTitle'
+import pencils from '../assets/photos/colouring-pencils.jpg'
+import playgroundSlide from '../assets/photos/playground-slide.jpg'
+import readBlocks from '../assets/photos/read-blocks.jpg'
+import toysOnFloor from '../assets/photos/toys-on-floor.jpg'
 
-/* ── SVG Icons matching the screenshot ── */
-const BackpackIcon = () => (
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="10" y="10" width="16" height="20" rx="4" stroke="#5B2C8F" strokeWidth="1.8" fill="none"/>
-    <path d="M13 10V8a5 5 0 0110 0v2" stroke="#5B2C8F" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-    <path d="M14 20h8M18 17v6" stroke="#5B2C8F" strokeWidth="1.6" strokeLinecap="round"/>
-    <path d="M13 15h10" stroke="#5B2C8F" strokeWidth="1.4" strokeLinecap="round"/>
-  </svg>
-)
+const FAVOURITES = ['rocket-set-1', 'mermaid-set-4', 'sneaker-girl-7', 'sunny-set-14', 'drink-01-10', 'princess-set-3', 'art-01-11', 'shoe-boy-8']
 
-const MegaphoneIcon = () => (
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8 14v8h4l10 6V8L12 14H8z" stroke="#5B2C8F" strokeWidth="1.8" strokeLinejoin="round" fill="none"/>
-    <path d="M26 14s2 2 2 4-2 4-2 4" stroke="#5B2C8F" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-    <path d="M12 22v4" stroke="#5B2C8F" strokeWidth="1.8" strokeLinecap="round"/>
-  </svg>
-)
-
-const ReviewBadgeIcon = () => (
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="18" cy="18" r="10" stroke="#5B2C8F" strokeWidth="1.8" fill="none"/>
-    <path d="M13 18l3.5 3.5L23 14" stroke="#5B2C8F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="26" cy="10" r="5" fill="#5B2C8F"/>
-    <path d="M23.5 10l1.5 1.5L27.5 8.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-)
-
-const collections = [
-  { Icon: BackpackIcon, label: 'Back 2 School' },
-  { Icon: MegaphoneIcon, label: 'New Arrivals' },
-  { Icon: ReviewBadgeIcon, label: 'Reviews' },
-  { Icon: ReviewBadgeIcon, label: 'Best Sellers' },
+const orderingSheet = [
+  {
+    group: 'Ordering',
+    rows: [
+      { name: 'Tick your list', value: 'Here', note: 'Or browse every shelf and fill your bag.' },
+      { name: 'Send it to us', value: 'WhatsApp', note: 'Your order lands in our chat, ready to confirm.' },
+      { name: 'Class or school orders', value: 'Just ask', note: 'Tell us how many and what for.' },
+    ],
+  },
+  {
+    group: 'Paying',
+    rows: [
+      { name: 'Bank transfer', value: 'After we confirm', note: 'We send the account details in the chat.' },
+      { name: 'Pay on delivery', value: 'Cash', note: 'Pay when your order arrives.' },
+    ],
+  },
+  {
+    group: 'Delivery',
+    rows: [
+      { name: 'Ten states, one price', value: formatNaira(site.deliveryFee), note: `${site.deliveryStates.slice(0, 3).join(', ')} and more.` },
+    ],
+  },
 ]
 
-export default function Home() {
-  const featuredBento = [
-    {
-      title: 'Back to School Essentials',
-      subtitle: 'Trending now',
-      description: 'Bright backpacks, matching lunch sets, and everyday favourites for a stress-free term.',
-      image: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=900&h=1200&fit=crop&q=80',
-      accent: 'linear-gradient(135deg,#5B2C8F,#9B5DE5)',
-      to: '/shop?category=Back%202%20School',
-    },
-    {
-      title: 'New In',
-      subtitle: 'Fresh arrivals',
-      description: 'Explore this week’s must-have accessories and standout gift-ready bundles.',
-      image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=900&h=900&fit=crop&q=80',
-      accent: 'linear-gradient(135deg,#154A67,#54A0FF)',
-      to: '/shop?category=New%20Arrivals',
-    },
-    {
-      title: 'Girls Edit',
-      subtitle: 'Made to sparkle',
-      description: 'Princess-inspired, pastel-coloured picks for confident little creatives.',
-      image: 'https://images.unsplash.com/photo-1600359756070-f9e7a3ed9aa9?w=900&h=900&fit=crop&q=80',
-      accent: 'linear-gradient(135deg,#D64E8A,#FF9AA2)',
-      to: '/shop?category=Girls',
-    },
-    {
-      title: 'School Shoes',
-      subtitle: 'Step ready',
-      description: 'Smart, flexible, and durable options for comfort from morning bell to home time.',
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&h=900&fit=crop&q=80',
-      accent: 'linear-gradient(135deg,#1B1B1F,#5C6478)',
-      to: '/shop?category=Shoes',
-    },
-  ]
+const questions = [
+  { q: 'How much is delivery?', a: `A flat ${formatNaira(site.deliveryFee)}, added to your order at checkout.` },
+  { q: 'Which states do you deliver to?', a: `${site.deliveryStates.slice(0, -1).join(', ')} and ${site.deliveryStates.at(-1)}.` },
+  { q: 'How do I pay?', a: 'By bank transfer or cash on delivery. If you choose transfer, we send the account details on WhatsApp once we confirm your order.' },
+  { q: 'Why WhatsApp?', a: 'Because it is quick. Your whole order arrives in one message, and you can ask about sizes or colours in the same chat.' },
+  { q: 'Can I order for a whole class?', a: 'Yes. Send us a message with what you need and how many, and we will work it out with you.' },
+  { q: 'Can I change something after ordering?', a: 'Message us with your order and we will sort it out. Returns and exchanges are handled in the same chat.' },
+  { q: 'Can I visit the shop?', a: 'We are on Lagos Island. Send us a message for directions before you set out.' },
+]
 
-  const bestSellers = shopAllProducts.slice(0, 8)
+function Shelves() {
+  const [active, setActive] = useState(0)
 
   return (
-    <div>
-      <section className="mk-hero">
-        <div className="mk-hero-text">
-          <span className="mk-hero-badge">School-ready essentials</span>
-          <h1>
-            YOUR GO-TO VENDOR<br />
-            FOR EVERYTHING BACK TO<br />
-            SCHOOL IN LAGOS ✨
-          </h1>
-          <p>Backpacks, lunch kits, stationery, shoes, and gifting favourites designed for kids who love to move, play, and learn.</p>
-          <div className="mk-hero-actions">
-            <Link to="/shop" className="mk-shop-btn">SHOP NOW</Link>
-            <Link to="/collections" className="mk-secondary-btn">See collections</Link>
-          </div>
-        </div>
-        <div className="mk-hero-img-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=700&h=700&fit=crop&q=90"
-            alt="Happy child with school backpack"
-            className="mk-hero-img"
-          />
-        </div>
-      </section>
-
-      <section className="mk-collections">
-        <h2>Featured Collections</h2>
-        <div className="mk-collections-row">
-          {collections.map(({ Icon, label }) => (
-            <Link key={label} to={label === 'Reviews' ? '/about' : '/shop'} className="mk-collection-item">
-              <div className="mk-collection-icon">
-                <Icon />
+    <section className="shelves band">
+      <Reveal>
+        <h2 className="section-title">Six shelves, one shop.</h2>
+      </Reveal>
+      <div className="shelf-deck">
+        {collections.map((shelf, i) => {
+          const sample = getProductById(shelf.sample)!
+          const count = shopAllProducts.filter((p) => inCollection(p, shelf.filter)).length
+          const isOpen = i === active
+          return (
+            <article key={shelf.id} className={`shelf tone-${shelf.tone}${isOpen ? ' is-open' : ''}`}>
+              <button type="button" className="shelf-spine" aria-expanded={isOpen} onClick={() => setActive(i)}>
+                <span>{shelf.label}</span>
+              </button>
+              <div className="shelf-open" aria-hidden={!isOpen}>
+                <ProductArt product={sample} decorative className="shelf-art" />
+                <div className="shelf-copy">
+                  <p className="shelf-name">{shelf.label}</p>
+                  <p>{shelf.description}</p>
+                  <Link
+                    to={`/shop?category=${encodeURIComponent(shelf.filter)}`}
+                    className="text-link"
+                    tabIndex={isOpen ? 0 : -1}
+                  >
+                    See all {count} <FiArrowRight aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
-              <span>{label}</span>
-            </Link>
+            </article>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
+export default function Home() {
+  usePageTitle('Everything back to school in Lagos')
+  const favourites = FAVOURITES.map((id) => getProductById(id)!)
+
+  return (
+    <>
+      <SchoolList />
+      <Shelves />
+
+      <section className="favourites band">
+        <Reveal className="section-head">
+          <h2 className="section-title">This term's favourites.</h2>
+          <Link to="/shop" className="text-link">Shop all {shopAllProducts.length} <FiArrowRight aria-hidden="true" /></Link>
+        </Reveal>
+        <div className="product-grid">
+          {favourites.map((product, i) => (
+            <Reveal key={product.id} delay={(i % 4) * 70}><ProductCard product={product} /></Reveal>
           ))}
         </div>
       </section>
 
-      <BentoSpotlight items={featuredBento} />
-
-      <section className="mk-top-products">
-        <div className="mk-section-head">
-          <h2>Top Products</h2>
-          <Link to="/shop" className="mk-link-btn">View all</Link>
+      <section className="ordering" aria-labelledby="ordering-title">
+        <img className="ordering-ground" src={toysOnFloor} width={1500} height={1001} alt="A child sitting on a carpet among colourful building blocks and toys" loading="lazy" />
+        <div className="ordering-layout">
+          <Reveal className="sheet">
+            <h2 id="ordering-title">How ordering works</h2>
+            {orderingSheet.map(({ group, rows }) => (
+              <div key={group} className="sheet-group">
+                <h3>{group}</h3>
+                {rows.map((row) => (
+                  <div key={row.name} className="sheet-row">
+                    <div className="sheet-line">
+                      <span>{row.name}</span>
+                      <i aria-hidden="true" />
+                      <strong>{row.value}</strong>
+                    </div>
+                    <p>{row.note}</p>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </Reveal>
+          <Reveal className="plate plate-feature" delay={120}>
+            <img src={readBlocks} width={1500} height={1000} alt="Wooden alphabet blocks spelling the word read" loading="lazy" />
+            <p>Ready for the first day of term.</p>
+          </Reveal>
         </div>
+      </section>
 
-        <div className="mk-horizontal-rail" aria-label="Featured products">
-          {bestSellers.map((p) => (
-            <div key={p.id} className="mk-rail-item">
-              <ProductCard product={p} />
-            </div>
+      <section className="letter-band" aria-labelledby="letter-title">
+        <Reveal className="plate plate-left">
+          <img src={pencils} width={1600} height={1066} alt="Colouring pencils arranged in a wheel of colour" loading="lazy" />
+        </Reveal>
+        <Reveal className="letter" delay={80}>
+          <div className="letter-sheet">
+            <svg className="letter-mark" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="13" cy="13" r="10" /><circle cx="35" cy="13" r="10" /><circle cx="24" cy="29" r="17" />
+            </svg>
+            <h2 id="letter-title">Dear parent,</h2>
+            <p>Minnie Kiddies started with one goal: make school prep exciting instead of stressful.</p>
+            <p>
+              We wanted every child heading back to class to feel proud of their bag, their shoes and
+              their first day of the term. That still decides what goes on our shelves.
+            </p>
+            <p>
+              Every backpack, lunch box and pair of shoes is chosen for durability and safety first,
+              then for the fun designs kids pick out themselves.
+            </p>
+            <p>So bring the list. We will take it from there.</p>
+            <p className="letter-sign">The Minnie Kiddies team</p>
+            <p className="letter-role">{site.location}</p>
+          </div>
+          <div className="letter-stub">
+            <a href={site.phoneHref}>{site.phone}</a>
+            <a className="btn btn-solid" href={whatsappLink("Hello Minnie Kiddies! I'd like to make an enquiry.")} target="_blank" rel="noreferrer">
+              <FaWhatsapp size={18} aria-hidden="true" /> Chat with us
+            </a>
+          </div>
+        </Reveal>
+        <Reveal className="plate plate-right" delay={160}>
+          <img src={playgroundSlide} width={1500} height={1000} alt="A child standing at the top of a yellow slide in an indoor playground" loading="lazy" />
+        </Reveal>
+      </section>
+
+      <section className="faq band">
+        <Reveal><h2 className="faq-title">Questions parents ask</h2></Reveal>
+        <Reveal className="faq-text" delay={80}>
+          {questions.map(({ q, a }) => (
+            <p key={q}><strong>{q}</strong> {a}</p>
           ))}
-        </div>
+        </Reveal>
       </section>
-
-      <section className="mk-story-band">
-        <div className="mk-story-copy">
-          <span className="mk-kicker">Why families shop with us</span>
-          <h3>Comfort, quality and fun in every choice.</h3>
-        </div>
-        <div className="mk-story-metrics">
-          <div><strong>1,200+</strong><span>happy students</span></div>
-          <div><strong>4.9/5</strong><span>average rating</span></div>
-          <div><strong>48h</strong><span>fast dispatch</span></div>
-        </div>
-      </section>
-
-      <MeetSection />
-      <ReviewPopup />
-
-      <style>{`
-        .mk-hero {
-          display: grid;
-          grid-template-columns: 1.08fr 0.92fr;
-          min-height: 360px;
-          overflow: hidden;
-          background: #fff;
-        }
-        .mk-hero-text {
-          background: linear-gradient(135deg, #f7f0ff 0%, #f3ebff 100%);
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 52px 40px;
-        }
-        .mk-hero-badge {
-          display: inline-block;
-          padding: 7px 12px;
-          border-radius: 999px;
-          background: rgba(91,44,143,0.1);
-          color: var(--mk-purple);
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 1.1px;
-          text-transform: uppercase;
-          width: fit-content;
-          margin-bottom: 14px;
-        }
-        .mk-hero-text h1 {
-          font-size: clamp(28px, 3vw, 42px);
-          font-weight: 800;
-          line-height: 1.18;
-          margin: 0 0 16px;
-          color: var(--mk-ink);
-          text-transform: uppercase;
-          letter-spacing: 0.3px;
-        }
-        .mk-hero-text p {
-          margin: 0 0 22px;
-          max-width: 560px;
-          color: var(--mk-grey);
-          font-size: 15px;
-          line-height: 1.7;
-        }
-        .mk-hero-actions {
-          display: flex;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-        .mk-shop-btn, .mk-secondary-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 10px;
-          padding: 14px 24px;
-          font-weight: 700;
-          font-size: 13px;
-          letter-spacing: 0.8px;
-          text-decoration: none;
-          transition: transform 0.15s ease;
-        }
-        .mk-shop-btn {
-          background: var(--mk-purple);
-          color: #fff;
-        }
-        .mk-secondary-btn {
-          background: #fff;
-          color: var(--mk-purple);
-          border: 1.5px solid rgba(91,44,143,0.4);
-        }
-        .mk-shop-btn:hover, .mk-secondary-btn:hover { transform: translateY(-1px); }
-        .mk-hero-img-wrap {
-          height: 100%;
-          min-height: 360px;
-          overflow: hidden;
-          position: relative;
-        }
-        .mk-hero-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center top;
-          display: block;
-        }
-
-        .mk-collections {
-          padding: 44px 32px 18px;
-          text-align: center;
-          border-bottom: 1px solid var(--mk-border);
-        }
-        .mk-collections h2 {
-          font-size: 22px;
-          font-weight: 700;
-          margin: 0 0 28px;
-        }
-        .mk-collections-row {
-          display: flex;
-          justify-content: center;
-          gap: 48px;
-          flex-wrap: wrap;
-        }
-        .mk-collection-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-          cursor: pointer;
-          text-decoration: none;
-          color: var(--mk-ink);
-          transition: transform 0.15s ease;
-        }
-        .mk-collection-item:hover { transform: translateY(-2px); }
-        .mk-collection-icon {
-          width: 72px;
-          height: 72px;
-          border-radius: 50%;
-          border: 1.5px solid var(--mk-purple);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #fff;
-          transition: background 0.2s;
-        }
-        .mk-collection-item:hover .mk-collection-icon {
-          background: var(--mk-purple-light);
-        }
-        .mk-collection-item span {
-          font-size: 14px;
-          font-weight: 600;
-          color: var(--mk-ink);
-        }
-
-        .mk-top-products {
-          padding: 30px 32px 52px;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        .mk-section-head {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 16px;
-          margin-bottom: 22px;
-        }
-        .mk-section-head h2 {
-          margin: 0;
-          font-size: 28px;
-          font-weight: 800;
-        }
-        .mk-link-btn {
-          color: var(--mk-purple);
-          text-decoration: none;
-          font-weight: 700;
-        }
-        .mk-horizontal-rail {
-          display: grid;
-          grid-auto-flow: column;
-          grid-auto-columns: minmax(180px, 1fr);
-          gap: 18px;
-          overflow-x: auto;
-          padding-bottom: 8px;
-          scrollbar-width: thin;
-        }
-        .mk-rail-item {
-          min-width: 0;
-        }
-
-        .mk-story-band {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 24px;
-          max-width: 1200px;
-          margin: 0 auto 24px;
-          padding: 28px 32px;
-          border-radius: 22px;
-          background: linear-gradient(135deg, #f8f3ff, #f6f6ff);
-        }
-        .mk-story-copy h3 {
-          margin: 0;
-          font-size: clamp(22px, 2vw, 30px);
-          font-weight: 800;
-        }
-        .mk-story-metrics {
-          display: flex;
-          gap: 28px;
-          flex-wrap: wrap;
-        }
-        .mk-story-metrics div {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          min-width: 110px;
-        }
-        .mk-story-metrics strong {
-          font-size: 24px;
-          color: var(--mk-purple);
-        }
-        .mk-story-metrics span {
-          font-size: 12px;
-          color: var(--mk-grey);
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-        }
-
-        @media (max-width: 760px) {
-          .mk-hero {
-            grid-template-columns: 1fr;
-          }
-          .mk-hero-img-wrap {
-            min-height: 260px;
-            order: -1;
-          }
-          .mk-hero-text {
-            padding: 32px 24px;
-          }
-          .mk-story-band {
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 22px 20px;
-          }
-          .mk-story-metrics {
-            width: 100%;
-            justify-content: space-between;
-            gap: 12px;
-          }
-          .mk-top-products {
-            padding-left: 20px;
-            padding-right: 20px;
-          }
-          .mk-horizontal-rail {
-            grid-auto-columns: minmax(150px, 1fr);
-          }
-        }
-
-        @media (max-width: 560px) {
-          .mk-collections-row {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px 12px;
-          }
-          .mk-collection-item span {
-            font-size: 12px;
-          }
-          .mk-product-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
-          }
-          .mk-section-head {
-            margin-bottom: 12px;
-          }
-          .mk-section-head h2 {
-            font-size: 22px;
-          }
-        }
-      `}</style>
-    </div>
+    </>
   )
 }

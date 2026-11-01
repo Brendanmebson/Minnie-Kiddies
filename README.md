@@ -1,26 +1,21 @@
-# Minnie Kiddies — React + TypeScript rebuild
+# Minnie Kiddies
 
-Stack: **Vite + React + TypeScript + Mantine UI** (no Tailwind), `react-router-dom` for the Home / Shop All / About Us pages, `react-icons` for iconography.
-
-## Run it
+The Minnie Kiddies shop: Vite, React, TypeScript and `react-router-dom`, styled with plain CSS tokens in `src/index.css`.
 
 ```bash
 npm install
 npm run dev
+npm run build
 ```
 
-Then open the printed localhost URL. `npm run build` produces a production build in `dist/`.
+## Where things live
 
-## Structure
+- `src/components/SchoolList.tsx`: the homepage hero. Tick a class list, the bag fills, and it adds to the bag or sends on WhatsApp.
+- `src/components/ProductArt.tsx`: the drawn product set. Swap it for real photography when it exists.
+- `src/data/products.ts`: catalogue, collections and the class lists.
+- `src/data/site.ts`: phone, WhatsApp number, delivery fee, delivery states and photo credits.
+- `src/pages/Checkout.tsx`: orders are sent as a pre-filled WhatsApp message; there is no payment gateway or order database.
 
-- `src/pages/Home.tsx` — hero, featured collections, top products, "Meet Minnie Kiddies"
-- `src/pages/ShopAll.tsx` — filter/sort bar, full product grid, pagination
-- `src/pages/AboutUs.tsx` — story, differentiators, team, community section
-- `src/components/` — Navbar, Footer, ChatWidget, ReviewPopup, ProductCard, Logo, MeetSection (shared across pages)
-- `src/data/products.ts` — product list (name/price)
-- `src/main.tsx` — Mantine theme tokens (purple/lavender palette matched to the screenshots)
+## Photographs
 
-## Note on images
-
-The screenshots' product photos, store photo and map aren't available as files, so products/hero/team use gradient placeholder blocks in the same color family instead of photography. Drop real images into `src/assets` and swap them into `ProductCard`, `Home.tsx`'s hero, and `MeetSection.tsx`/`AboutUs.tsx` wherever you see the gradient `<div>`s — everything else (layout, spacing, type scale, colors, copy, nav, footer, pagination, popup) matches the reference designs.
-# Minnie-Kiddies
+Photographs are in `src/assets/photos`. They are openly licensed, and `credits.json` there lists each author, licence and source.

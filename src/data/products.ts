@@ -1,91 +1,105 @@
+export type ProductKind =
+  | 'backpack'
+  | 'mini-backpack'
+  | 'tote'
+  | 'sneaker'
+  | 'school-shoe'
+  | 'lunch-kit'
+  | 'bottle'
+  | 'art-case'
+  | 'math-tin'
+  | 'pouch'
+
+export type ProductMotif =
+  | 'rocket'
+  | 'controller'
+  | 'crown'
+  | 'wave'
+  | 'ball'
+  | 'planet'
+  | 'star'
+  | 'bolt'
+  | 'leaf'
+  | 'dino'
+  | 'brush'
+  | 'ruler'
+  | 'unicorn'
+  | 'sun'
+  | 'rainbow'
+  | 'tent'
+
 export type Product = {
   id: string
   name: string
   price: string
   priceNum: number
-  image: string
-  images?: string[]
+  kind: ProductKind
+  motif: ProductMotif
   category: string
+  isNew: boolean
   description: string
   features: string[]
-  colors?: string[]
-  gradient?: string
-  emoji?: string
+  colors: string[]
 }
 
-const imagePool = [
-  'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1581605405669-fcdf81165afa?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1600359756070-f9e7a3ed9aa9?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1580087256394-dc596e1c8f4f?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=900&h=900&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=900&h=900&fit=crop&q=80',
-]
+export const NEW_ARRIVALS = 'New Arrivals'
 
 const productSeeds = [
-  { id: 'rocket-set', name: 'Rocket Backpack', category: 'Back 2 School', priceNum: 15000, colors: ['Navy', 'Sky Blue'], features: ['Padded straps', 'Waterproof base', 'Large front pocket', 'Lunch sleeve', 'Reflective trim'], gradient: 'linear-gradient(135deg,#1E3A8A,#60A5FA)', emoji: '🚀' },
-  { id: 'mario-set', name: 'Game On Pack', category: 'Back 2 School', priceNum: 17000, colors: ['Black', 'Orange'], features: ['Gaming print', 'Heavy-duty zip', 'Main compartment', 'Built-in pouch', 'Easy-clean finish'], gradient: 'linear-gradient(135deg,#F97316,#FB7185)', emoji: '🎮' },
-  { id: 'princess-set', name: 'Princess Tote', category: 'Girls', priceNum: 14000, colors: ['Pink', 'Rose Gold'], features: ['Protective corners', 'Mesh bottle pocket', 'Soft lining', 'Charm detail', 'Matching pouch'], gradient: 'linear-gradient(135deg,#F9A8D4,#F472B6)', emoji: '👑' },
-  { id: 'mermaid-set', name: 'Mermaid Spark Pack', category: 'Girls', priceNum: 15500, colors: ['Teal', 'Lilac'], features: ['Glitter trim', 'Quick zip access', 'Double handle', 'Side pockets', 'Safety clasp'], gradient: 'linear-gradient(135deg,#67E8F9,#C084FC)', emoji: '🧜‍♀️' },
-  { id: 'soccer-set', name: 'Soccer Star Kit', category: 'Back 2 School', priceNum: 18000, colors: ['Blue', 'White'], features: ['Club print', 'Bottle holder', 'Front organiser', 'Durable canvas', 'Shock-absorbing straps'], gradient: 'linear-gradient(135deg,#2563EB,#38BDF8)', emoji: '⚽' },
-  { id: 'space-set', name: 'Explorer Bundle', category: 'Back 2 School', priceNum: 16500, colors: ['Midnight Blue', 'Silver'], features: ['Constellation print', 'Laptop sleeve', 'Mesh venting', 'Padded back', 'Double zipper'], gradient: 'linear-gradient(135deg,#0F172A,#64748B)', emoji: '🪐' },
-  { id: 'sneaker-girl', name: 'Spark Sneaker', category: 'Shoes', priceNum: 19500, colors: ['Pink', 'White'], features: ['Foam sole', 'Ventilated upper', 'Easy slip-on', 'Flex comfort', 'Bright accents'], gradient: 'linear-gradient(135deg,#F9A8D4,#E9D5FF)', emoji: '👟' },
-  { id: 'shoe-boy', name: 'Daily Runner', category: 'Shoes', priceNum: 20500, colors: ['Black', 'Charcoal'], features: ['Non-slip sole', 'Velcro strap', 'Shock-absorbing heel', 'Breatheable lining', 'Toe guard'], gradient: 'linear-gradient(135deg,#0F172A,#475569)', emoji: '👞' },
-  { id: 'lunch-01', name: 'Cool Lunch Kit', category: 'Lunch & Drinks', priceNum: 8500, colors: ['Green', 'Stone'], features: ['Insulated lining', 'Cooling pocket', 'Leak free', 'Easy carry handle', 'Durable shell'], gradient: 'linear-gradient(135deg,#22C55E,#A3E635)', emoji: '🎒' },
-  { id: 'drink-01', name: 'Dino Bottle', category: 'Lunch & Drinks', priceNum: 3500, colors: ['Green', 'Teal'], features: ['Leak-proof lid', 'Vacuum insulated', 'BPA-free', '12h cold', 'Easy-grip body'], gradient: 'linear-gradient(135deg,#34D399,#14B8A6)', emoji: '🦕' },
-  { id: 'art-01', name: 'Creative Case', category: 'Art & Stationery', priceNum: 12000, colors: ['Multicolor'], features: ['48-piece set', 'Carry case', 'Brush set', 'Watercolour tray', 'Age 4+'], gradient: 'linear-gradient(135deg,#F472B6,#FB7185)', emoji: '🎨' },
-  { id: 'stationery-01', name: 'Math Master Kit', category: 'Art & Stationery', priceNum: 5000, colors: ['Silver', 'Gold'], features: ['Compass', 'Protractor', 'Ruler', 'Metal tin', 'Precision tools'], gradient: 'linear-gradient(135deg,#475569,#94A3B8)', emoji: '📐' },
-  { id: 'mini-unicorn', name: 'Unicorn Mini Pack', category: 'Girls', priceNum: 11500, colors: ['Purple', 'Pink'], features: ['Mini size', 'Front zip pocket', 'Soft handles', 'Star charm', 'Lightweight feel'], gradient: 'linear-gradient(135deg,#8B5CF6,#F9A8D4)', emoji: '🦄' },
-  { id: 'sunny-set', name: 'Sunny Lunch Duo', category: 'Lunch & Drinks', priceNum: 9500, colors: ['Yellow', 'Orange'], features: ['Lunch bag', 'Bottle set', 'Easy clean', 'Insulated', 'Carry handle'], gradient: 'linear-gradient(135deg,#FACC15,#FB923C)', emoji: '🌞' },
-  { id: 'rainbow-pouch', name: 'Rainbow Pencil Pouch', category: 'Art & Stationery', priceNum: 4500, colors: ['Rainbow', 'Pastel'], features: ['Organiser slots', 'Stand-up base', 'Soft fabric', 'Double zips', 'Ages 5+'], gradient: 'linear-gradient(135deg,#FB7185,#FCD34D)', emoji: '✏️' },
-  { id: 'camp-pack', name: 'Camp Outdoor Bag', category: 'Back 2 School', priceNum: 17500, colors: ['Olive', 'Khaki'], features: ['Water resistant', 'Bottle pocket', 'Wide straps', 'Adventure print', 'Organiser panels'], gradient: 'linear-gradient(135deg,#4D7C0F,#84CC16)', emoji: '🎒' },
-]
+  { id: 'rocket-set', name: 'Rocket Backpack', kind: 'backpack', motif: 'rocket', category: 'Back 2 School', priceNum: 15000, colors: ['Navy', 'Sky Blue'], features: ['Padded straps', 'Waterproof base', 'Large front pocket', 'Lunch sleeve', 'Reflective trim'] },
+  { id: 'mario-set', name: 'Game On Pack', kind: 'backpack', motif: 'controller', category: 'Back 2 School', priceNum: 17000, colors: ['Black', 'Orange'], features: ['Gaming print', 'Heavy-duty zip', 'Main compartment', 'Built-in pouch', 'Easy-clean finish'] },
+  { id: 'princess-set', name: 'Princess Tote', kind: 'tote', motif: 'crown', category: 'Girls', priceNum: 14000, colors: ['Pink', 'Rose Gold'], features: ['Protective corners', 'Mesh bottle pocket', 'Soft lining', 'Charm detail', 'Matching pouch'] },
+  { id: 'mermaid-set', name: 'Mermaid Spark Pack', kind: 'backpack', motif: 'wave', category: 'Girls', priceNum: 15500, colors: ['Teal', 'Lilac'], features: ['Glitter trim', 'Quick zip access', 'Double handle', 'Side pockets', 'Safety clasp'] },
+  { id: 'soccer-set', name: 'Soccer Star Kit', kind: 'backpack', motif: 'ball', category: 'Back 2 School', priceNum: 18000, colors: ['Blue', 'White'], features: ['Club print', 'Bottle holder', 'Front organiser', 'Durable canvas', 'Shock-absorbing straps'] },
+  { id: 'space-set', name: 'Explorer Bundle', kind: 'backpack', motif: 'planet', category: 'Back 2 School', priceNum: 16500, colors: ['Midnight Blue', 'Silver'], features: ['Constellation print', 'Laptop sleeve', 'Mesh venting', 'Padded back', 'Double zipper'] },
+  { id: 'sneaker-girl', name: 'Spark Sneaker', kind: 'sneaker', motif: 'star', category: 'Shoes', priceNum: 19500, colors: ['Pink', 'White'], features: ['Foam sole', 'Ventilated upper', 'Easy slip-on', 'Flex comfort', 'Bright accents'] },
+  { id: 'shoe-boy', name: 'Daily Runner', kind: 'school-shoe', motif: 'bolt', category: 'Shoes', priceNum: 20500, colors: ['Black', 'Charcoal'], features: ['Non-slip sole', 'Velcro strap', 'Shock-absorbing heel', 'Breathable lining', 'Toe guard'] },
+  { id: 'lunch-01', name: 'Cool Lunch Kit', kind: 'lunch-kit', motif: 'leaf', category: 'Lunch & Drinks', priceNum: 8500, colors: ['Green', 'Stone'], features: ['Insulated lining', 'Cooling pocket', 'Leak free', 'Easy carry handle', 'Durable shell'] },
+  { id: 'drink-01', name: 'Dino Bottle', kind: 'bottle', motif: 'dino', category: 'Lunch & Drinks', priceNum: 3500, colors: ['Green', 'Teal'], features: ['Leak-proof lid', 'Vacuum insulated', 'BPA-free', '12h cold', 'Easy-grip body'] },
+  { id: 'art-01', name: 'Creative Case', kind: 'art-case', motif: 'brush', category: 'Art & Stationery', priceNum: 12000, colors: ['Multicolor'], features: ['48-piece set', 'Carry case', 'Brush set', 'Watercolour tray', 'Age 4+'] },
+  { id: 'stationery-01', name: 'Math Master Kit', kind: 'math-tin', motif: 'ruler', category: 'Art & Stationery', priceNum: 5000, colors: ['Silver', 'Gold'], features: ['Compass', 'Protractor', 'Ruler', 'Metal tin', 'Precision tools'] },
+  { id: 'mini-unicorn', name: 'Unicorn Mini Pack', kind: 'mini-backpack', motif: 'unicorn', category: 'Girls', priceNum: 11500, colors: ['Purple', 'Pink'], features: ['Mini size', 'Front zip pocket', 'Soft handles', 'Star charm', 'Lightweight feel'] },
+  { id: 'sunny-set', name: 'Sunny Lunch Duo', kind: 'lunch-kit', motif: 'sun', category: 'Lunch & Drinks', priceNum: 9500, colors: ['Yellow', 'Orange'], features: ['Lunch bag', 'Bottle set', 'Easy clean', 'Insulated', 'Carry handle'] },
+  { id: 'rainbow-pouch', name: 'Rainbow Pencil Pouch', kind: 'pouch', motif: 'rainbow', category: 'Art & Stationery', priceNum: 4500, colors: ['Rainbow', 'Pastel'], features: ['Organiser slots', 'Stand-up base', 'Soft fabric', 'Double zips', 'Ages 5+'] },
+  { id: 'camp-pack', name: 'Camp Outdoor Bag', kind: 'backpack', motif: 'tent', category: 'Back 2 School', priceNum: 17500, colors: ['Olive', 'Khaki'], features: ['Water resistant', 'Bottle pocket', 'Wide straps', 'Adventure print', 'Organiser panels'] },
+] satisfies Array<{
+  id: string
+  name: string
+  kind: ProductKind
+  motif: ProductMotif
+  category: string
+  priceNum: number
+  colors: string[]
+  features: string[]
+}>
 
 const variantNames = ['Classic', 'Plus', 'Max', 'Glow', 'Mini', 'Hero', 'Dream', 'Sport', 'Fresh', 'Deluxe']
+
+const TOTAL_PRODUCTS = 100
+const NEW_ARRIVAL_COUNT = 12
 
 const formatPrice = (value: number) => `₦${value.toLocaleString('en-NG')}`
 
 const buildCatalog = (): Product[] => {
-  const total = 100
   const items: Product[] = []
 
-  for (let i = 0; i < total; i += 1) {
+  for (let i = 0; i < TOTAL_PRODUCTS; i += 1) {
     const seed = productSeeds[i % productSeeds.length]
     const variant = variantNames[i % variantNames.length]
     const idx = i + 1
     const basePrice = seed.priceNum + (i % 7) * 1500
-
-    const images = Array.from({ length: 5 }, (_, imageIndex) =>
-      imagePool[(i * 3 + imageIndex + seed.id.length) % imagePool.length]
-    )
 
     items.push({
       id: `${seed.id}-${idx}`,
       name: `${seed.name} ${variant}`,
       price: formatPrice(basePrice),
       priceNum: basePrice,
+      kind: seed.kind,
+      motif: seed.motif,
       category: seed.category,
-      image: images[0],
-      images,
+      isNew: i >= TOTAL_PRODUCTS - NEW_ARRIVAL_COUNT,
       description: `${seed.name} brings style, organisation and everyday comfort to your child’s school routine with durable materials, playful design details and a practical layout for learning and play.`,
-      features: [...seed.features, `Edition ${variant}`, 'Kid approved', 'School-ready comfort'],
+      features: [...seed.features, `Edition ${variant}`, 'School-ready comfort'],
       colors: seed.colors,
-      gradient: seed.gradient,
-      emoji: seed.emoji,
     })
   }
 
@@ -93,9 +107,66 @@ const buildCatalog = (): Product[] => {
 }
 
 export const shopAllProducts: Product[] = buildCatalog()
-export const topProducts: Product[] = shopAllProducts.slice(0, 8)
-export const allProducts = shopAllProducts
+
+export const inCollection = (product: Product, collection: string) =>
+  collection === NEW_ARRIVALS ? product.isNew : product.category === collection
 
 export function getProductById(id: string): Product | undefined {
   return shopAllProducts.find((p) => p.id === id)
 }
+
+export const collections = [
+  { id: 'back-2-school', label: 'Back 2 School', filter: 'Back 2 School', description: 'Everything your child needs to start the term in style.', sample: 'rocket-set-1', tone: 'purple' },
+  { id: 'new-arrivals', label: 'New Arrivals', filter: NEW_ARRIVALS, description: 'The latest backpack sets and accessories, just landed.', sample: 'camp-pack-96', tone: 'yellow' },
+  { id: 'girls', label: "Girls' Collection", filter: 'Girls', description: "Pretty, vibrant sets built for every girl's personality.", sample: 'mini-unicorn-13', tone: 'pink' },
+  { id: 'shoes', label: 'School Shoes', filter: 'Shoes', description: 'Comfortable, durable shoes from first day to last bell.', sample: 'sneaker-girl-7', tone: 'lilac' },
+  { id: 'lunch-drinks', label: 'Lunch & Drinks', filter: 'Lunch & Drinks', description: 'Fresh, fun food containers and bottles for every school day.', sample: 'sunny-set-14', tone: 'green' },
+  { id: 'art-stationery', label: 'Art & Stationery', filter: 'Art & Stationery', description: 'Creative kits and classroom essentials for curious minds.', sample: 'art-01-11', tone: 'blue' },
+] as const
+
+const list = (...ids: string[]) => ids.map((id) => getProductById(id)!)
+
+export type SchoolListLine = { label: string; product: Product }
+export type SchoolListStage = { id: string; label: string; lines: SchoolListLine[]; preticked: number }
+
+export const schoolLists: SchoolListStage[] = [
+  {
+    id: 'nursery',
+    label: 'Nursery',
+    preticked: 3,
+    lines: [
+      { label: 'A small bag', product: list('mini-unicorn-13')[0] },
+      { label: 'Lunch box', product: list('lunch-01-9')[0] },
+      { label: 'Water bottle', product: list('drink-01-10')[0] },
+      { label: 'Colouring set', product: list('art-01-11')[0] },
+      { label: 'Pencil pouch', product: list('rainbow-pouch-15')[0] },
+      { label: 'Everyday shoes', product: list('sneaker-girl-7')[0] },
+    ],
+  },
+  {
+    id: 'primary',
+    label: 'Primary',
+    preticked: 4,
+    lines: [
+      { label: 'School bag', product: list('rocket-set-1')[0] },
+      { label: 'Lunch kit', product: list('sunny-set-14')[0] },
+      { label: 'Water bottle', product: list('drink-01-10')[0] },
+      { label: 'Maths set', product: list('stationery-01-12')[0] },
+      { label: 'Pencil pouch', product: list('rainbow-pouch-15')[0] },
+      { label: 'School shoes', product: list('shoe-boy-8')[0] },
+    ],
+  },
+  {
+    id: 'secondary',
+    label: 'Secondary',
+    preticked: 3,
+    lines: [
+      { label: 'Big school bag', product: list('space-set-6')[0] },
+      { label: 'Maths set', product: list('stationery-01-12')[0] },
+      { label: 'Water bottle', product: list('drink-01-26')[0] },
+      { label: 'Lunch kit', product: list('lunch-01-25')[0] },
+      { label: 'Pencil pouch', product: list('rainbow-pouch-31')[0] },
+      { label: 'School shoes', product: list('shoe-boy-24')[0] },
+    ],
+  },
+]

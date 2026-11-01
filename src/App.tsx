@@ -11,6 +11,7 @@ import ProductDetail from './pages/ProductDetail'
 import Checkout from './pages/Checkout'
 import Collections from './pages/Collections'
 import Contact from './pages/Contact'
+import NotFound from './pages/NotFound'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -26,8 +27,9 @@ export default function App() {
   return (
     <CartProvider>
       <ScrollToTop />
+      <a href="#main" className="skip-link">Skip to content</a>
       <Navbar />
-      <main style={{ flex: 1 }}>
+      <main id="main" className="page-main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<ShopAll />} />
@@ -36,6 +38,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
