@@ -10,7 +10,7 @@ npm run build
 
 ## Where things live
 
-- `src/components/SchoolList.tsx`: the homepage hero. Tick a class list, the bag fills, and it adds to the bag or sends on WhatsApp.
+- `src/components/SchoolList.tsx`: the homepage school list. Tick a class list, the bag fills, and it adds to the bag or sends on WhatsApp.
 - `src/components/ProductArt.tsx`: the drawn product set. Swap it for real photography when it exists.
 - `src/data/products.ts`: catalogue, collections and the class lists.
 - `src/data/site.ts`: phone, WhatsApp number, delivery fee, delivery states and photo credits.

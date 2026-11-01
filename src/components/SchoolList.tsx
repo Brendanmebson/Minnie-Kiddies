@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { FiCheck } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
 import ProductArt from './ProductArt'
-import Stripe from './Stripe'
 import { schoolLists } from '../data/products'
 import { formatNaira, whatsappLink } from '../data/site'
 import { useCart } from '../context/cart'
@@ -47,15 +46,11 @@ export default function SchoolList() {
   ].join('\n')
 
   return (
-    <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-card">
-        <Stripe />
-        <div className="hero-card-body">
-          <h1 id="hero-title">Everything on the school list.</h1>
-          <p className="hero-lead">
-            Bags, shoes, lunch kits and stationery from our Lagos Island shop. Tick what your child
-            needs and watch the bag fill up.
-          </p>
+    <section className="school-list" id="school-list" aria-labelledby="school-list-title">
+      <div className="wrap list-layout">
+        <div>
+          <h2 id="school-list-title">Got the school list? Tick it off</h2>
+          <p className="list-lead">Choose a class, tick what your child needs and add it all in one go.</p>
 
           <div className="stage-tabs" role="group" aria-label="Choose a class">
             {schoolLists.map((s, i) => (
@@ -70,7 +65,7 @@ export default function SchoolList() {
               <li key={`${stage.id}-${line.label}`}>
                 <label className="list-line">
                   <input type="checkbox" checked={ticked.has(i)} onChange={() => toggle(i)} />
-                  <span className="list-box" aria-hidden="true"><FiCheck size={18} strokeWidth={3.5} /></span>
+                  <span className="tick-box" aria-hidden="true"><FiCheck size={14} strokeWidth={3.5} /></span>
                   <span className="list-text">
                     <span className="list-label">{line.label}</span>
                     <span className="list-product">{line.product.name}</span>
@@ -82,41 +77,39 @@ export default function SchoolList() {
           </ul>
         </div>
 
-        <div className="hero-foot">
-          <button type="button" className="btn btn-solid btn-wide" disabled={chosen.length === 0} onClick={addAll}>
-            {chosen.length === 0
-              ? 'Tick an item to start'
-              : `Add ${chosen.length} ${chosen.length === 1 ? 'item' : 'items'} to bag · ${formatNaira(total)}`}
-          </button>
-          {chosen.length > 0 && (
-            <a className="hero-whatsapp" href={whatsappLink(whatsappMessage)} target="_blank" rel="noreferrer">
-              <FaWhatsapp size={18} aria-hidden="true" /> Or send this list on WhatsApp
-            </a>
-          )}
-        </div>
-      </div>
-
-      <div className="hero-stage">
-        <div className="bag-scene">
-          <div className="bag-items" aria-hidden="true">
-            {stage.lines.map((line, i) => (
-              <div key={`${stage.id}-${i}`} className={`bag-item slot-${i}${ticked.has(i) ? ' is-packed' : ''}`}>
-                <ProductArt product={line.product} decorative />
-              </div>
-            ))}
+        <aside className="list-summary" aria-label="Your list">
+          <div className="bag-scene" aria-hidden="true">
+            <div className="bag-items">
+              {stage.lines.map((line, i) => (
+                <div key={`${stage.id}-${i}`} className={`bag-item slot-${i}${ticked.has(i) ? ' is-packed' : ''}`}>
+                  <ProductArt product={line.product} decorative />
+                </div>
+              ))}
+            </div>
+            <svg className="bag-body" viewBox="0 0 600 470">
+              <circle cx="84" cy="84" r="84" className="bag-ear" />
+              <circle cx="516" cy="84" r="84" className="bag-ear" />
+              <path d="M40 92h520v288c0 50-34 84-84 84H124c-50 0-84-34-84-84z" className="bag-front" />
+              <rect x="96" y="176" width="408" height="238" rx="44" className="bag-pocket" />
+            </svg>
           </div>
-          <svg className="bag-body" viewBox="0 0 600 470" aria-hidden="true">
-            <circle cx="84" cy="84" r="84" className="bag-ear" />
-            <circle cx="516" cy="84" r="84" className="bag-ear" />
-            <path d="M40 92h520v288c0 50-34 84-84 84H124c-50 0-84-34-84-84z" className="bag-front" />
-            <rect x="96" y="176" width="408" height="238" rx="44" className="bag-pocket" />
-            <path d="M40 92h520v46H40z" className="bag-rim" />
-          </svg>
+
           <p className="bag-total" aria-live="polite">
-            <strong>{formatNaira(total)}</strong>
             <span>{chosen.length} {chosen.length === 1 ? 'item' : 'items'} packed</span>
+            <strong>{formatNaira(total)}</strong>
           </p>
-        </div>
+
+          <div className="list-actions">
+            <button type="button" className="btn btn-solid btn-wide" disabled={chosen.length === 0} onClick={addAll}>
+              {chosen.length === 0 ? 'Tick an item to start' : 'Add to bag'}
+            </button>
+            {chosen.length > 0 && (
+              <a className="btn btn-quiet btn-wide" href={whatsappLink(whatsappMessage)} target="_blank" rel="noreferrer">
+                <FaWhatsapp size={16} aria-hidden="true" /> Send on WhatsApp
+              </a>
+            )}
+          </div>
+        </aside>
       </div>
     </section>
   )

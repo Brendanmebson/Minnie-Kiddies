@@ -35,14 +35,14 @@ function ProductView({ product }: { product: Product }) {
 
   return (
     <>
-      <nav className="crumbs" aria-label="Breadcrumb">
+      <nav className="wrap crumbs" aria-label="Breadcrumb">
         <Link to="/">Home</Link><span aria-hidden="true">/</span>
         <Link to="/shop">Shop</Link><span aria-hidden="true">/</span>
         <Link to={`/shop?category=${encodeURIComponent(product.category)}`}>{product.category}</Link>
       </nav>
 
-      <section className="pd">
-        <figure className="pd-plate tone-lilac">
+      <section className="wrap pd">
+        <figure className="pd-plate">
           <ProductArt key={color} product={product} color={color} className="pd-art" />
           <figcaption className="pd-ask">
             This is a drawing.{' '}
@@ -81,14 +81,14 @@ function ProductView({ product }: { product: Product }) {
           <h2>What you get</h2>
           <ul className="pd-features">
             {product.features.map((feature) => (
-              <li key={feature}><FiCheck size={18} aria-hidden="true" /> {feature}</li>
+              <li key={feature}><FiCheck aria-hidden="true" /> {feature}</li>
             ))}
           </ul>
         </div>
       </section>
 
       {related.length > 0 && (
-        <section className="band related">
+        <section className="wrap section related">
           <h2 className="section-title">Goes well with</h2>
           <div className="product-grid">
             {related.map((p) => <ProductCard key={p.id} product={p} />)}

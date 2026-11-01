@@ -116,12 +116,12 @@ export function getProductById(id: string): Product | undefined {
 }
 
 export const collections = [
-  { id: 'back-2-school', label: 'Back 2 School', filter: 'Back 2 School', description: 'Everything your child needs to start the term in style.', sample: 'rocket-set-1', tone: 'purple' },
-  { id: 'new-arrivals', label: 'New Arrivals', filter: NEW_ARRIVALS, description: 'The latest backpack sets and accessories, just landed.', sample: 'camp-pack-96', tone: 'yellow' },
-  { id: 'girls', label: "Girls' Collection", filter: 'Girls', description: "Pretty, vibrant sets built for every girl's personality.", sample: 'mini-unicorn-13', tone: 'pink' },
-  { id: 'shoes', label: 'School Shoes', filter: 'Shoes', description: 'Comfortable, durable shoes from first day to last bell.', sample: 'sneaker-girl-7', tone: 'lilac' },
-  { id: 'lunch-drinks', label: 'Lunch & Drinks', filter: 'Lunch & Drinks', description: 'Fresh, fun food containers and bottles for every school day.', sample: 'sunny-set-14', tone: 'green' },
-  { id: 'art-stationery', label: 'Art & Stationery', filter: 'Art & Stationery', description: 'Creative kits and classroom essentials for curious minds.', sample: 'art-01-11', tone: 'blue' },
+  { id: 'back-2-school', label: 'Back 2 School', filter: 'Back 2 School', description: 'Everything your child needs to start the term in style.', sample: 'rocket-set-1' },
+  { id: 'new-arrivals', label: 'New Arrivals', filter: NEW_ARRIVALS, description: 'The latest backpack sets and accessories, just landed.', sample: 'camp-pack-96' },
+  { id: 'girls', label: "Girls' Collection", filter: 'Girls', description: "Pretty, vibrant sets built for every girl's personality.", sample: 'mini-unicorn-13' },
+  { id: 'shoes', label: 'School Shoes', filter: 'Shoes', description: 'Comfortable, durable shoes from first day to last bell.', sample: 'sneaker-girl-7' },
+  { id: 'lunch-drinks', label: 'Lunch & Drinks', filter: 'Lunch & Drinks', description: 'Fresh, fun food containers and bottles for every school day.', sample: 'sunny-set-14' },
+  { id: 'art-stationery', label: 'Art & Stationery', filter: 'Art & Stationery', description: 'Creative kits and classroom essentials for curious minds.', sample: 'art-01-11' },
 ] as const
 
 const list = (...ids: string[]) => ids.map((id) => getProductById(id)!)

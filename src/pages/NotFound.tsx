@@ -6,9 +6,9 @@ export default function NotFound() {
   usePageTitle('Page not found')
 
   return (
-    <PageHead title="That one isn't on the list." size="tall">
+    <PageHead title="That one isn't on the list" size="state">
       <p>The page may have moved. The shop is still right here.</p>
-      <Link to="/shop" className="btn btn-yellow">Back to the shop</Link>
+      <Link to="/shop" className="btn btn-solid">Back to the shop</Link>
     </PageHead>
   )
 }

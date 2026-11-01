@@ -79,12 +79,12 @@ export default function Checkout() {
 
   if (sentLink) {
     return (
-      <PageHead title="One last step." size="tall">
+      <PageHead title="One last step" size="state">
         <p>
           Press send in WhatsApp so your order reaches us. We'll confirm it on {form.phone.trim()}
           {method === 'transfer' ? ' and send the bank details in the chat.' : '.'}
         </p>
-        <a className="btn btn-yellow" href={sentLink} target="_blank" rel="noreferrer">
+        <a className="btn btn-solid" href={sentLink} target="_blank" rel="noreferrer">
           <FaWhatsapp size={20} aria-hidden="true" /> Open WhatsApp again
         </a>
       </PageHead>
@@ -93,9 +93,9 @@ export default function Checkout() {
 
   if (items.length === 0) {
     return (
-      <PageHead title="Your bag is empty." size="tall">
+      <PageHead title="Your bag is empty" size="state">
         <p>Tick your school list or browse the shelves to fill it up.</p>
-        <Link to="/shop" className="btn btn-yellow">Go shopping</Link>
+        <Link to="/shop" className="btn btn-solid">Go shopping</Link>
       </PageHead>
     )
   }
@@ -114,15 +114,15 @@ export default function Checkout() {
 
   return (
     <>
-      <PageHead title="Your bag" size="plain" />
+      <PageHead title="Your bag" />
 
-      <div className="checkout">
+      <div className="wrap checkout">
         <section className="receipt" aria-labelledby="receipt-title">
           <h2 id="receipt-title">Your list</h2>
           <ul className="receipt-items">
             {items.map(({ key, product, color, quantity }) => (
               <li key={key}>
-                <div className="receipt-art tone-lilac"><ProductArt product={product} color={color} decorative /></div>
+                <div className="receipt-art"><ProductArt product={product} color={color} decorative /></div>
                 <div className="receipt-line">
                   <Link to={`/product/${product.id}`}>{product.name}</Link>
                   <span>{color}</span>
@@ -182,7 +182,7 @@ export default function Checkout() {
             {(Object.keys(PAYMENT_LABELS) as Method[]).map((value) => (
               <label key={value} className="pay-option">
                 <input type="radio" name="method" checked={method === value} onChange={() => setMethod(value)} />
-                <span className="pay-box" aria-hidden="true"><FiCheck size={16} strokeWidth={3.5} /></span>
+                <span className="tick-box" aria-hidden="true"><FiCheck size={14} strokeWidth={3.5} /></span>
                 <span>
                   <strong>{PAYMENT_LABELS[value]}</strong>
                   {value === 'transfer' ? 'We send the account details on WhatsApp.' : 'Pay cash when your order arrives.'}

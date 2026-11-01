@@ -81,11 +81,11 @@ export default function ShopAll() {
 
   return (
     <>
-      <PageHead title={activeCategory === ALL ? 'Shop everything for school' : activeCategory}>
+      <PageHead title={activeCategory === ALL ? 'Shop all' : activeCategory}>
         <p>{filtered.length} {filtered.length === 1 ? 'item' : 'items'}{searchTerm ? ` matching “${searchTerm}”` : ''}</p>
       </PageHead>
 
-      <div className="shop-tools">
+      <div className="wrap shop-tools">
         <div className="chips" role="group" aria-label="Filter by category">
           {CATEGORIES.map((category) => (
             <button
@@ -109,7 +109,7 @@ export default function ShopAll() {
               type="search"
               value={searchTerm}
               onChange={(e) => setParam('q', e.target.value)}
-              placeholder="Search backpacks, shoes, lunch kits..."
+              placeholder="Search this shelf"
             />
             {searchTerm && (
               <button type="button" onClick={() => setParam('q', '')} aria-label="Clear search"><FiX size={16} /></button>
@@ -122,14 +122,14 @@ export default function ShopAll() {
         </div>
       </div>
 
-      <section className="shop-results" aria-label="Products">
+      <section className="wrap shop-results" aria-label="Products">
         {pageItems.length > 0 ? (
           <div className="product-grid">
             {pageItems.map((product) => <ProductCard key={product.id} product={product} />)}
           </div>
         ) : (
           <div className="empty-state">
-            <h2>Nothing on that shelf yet.</h2>
+            <h2>Nothing on that shelf yet</h2>
             <p>Try a shorter word, or clear your filters and look around.</p>
             <button type="button" className="btn btn-solid" onClick={clearFilters}>Clear filters</button>
           </div>
