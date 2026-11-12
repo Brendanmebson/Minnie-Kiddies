@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { FiCheck } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
 import ProductArt from './ProductArt'
+import SectionHeading from './SectionHeading'
 import { schoolLists } from '../data/products'
 import { formatNaira, whatsappLink } from '../data/site'
 import { useCart } from '../context/cart'
@@ -49,8 +50,13 @@ export default function SchoolList() {
     <section className="school-list" id="school-list" aria-labelledby="school-list-title">
       <div className="wrap list-layout">
         <div>
-          <h2 id="school-list-title">Got the school list? Tick it off</h2>
-          <p className="list-lead">Choose a class, tick what your child needs and add it all in one go.</p>
+          <SectionHeading
+            id="school-list-title"
+            align="start"
+            eyebrow="The school list"
+            title="Got the list? Tick it off"
+            lead="Choose a class, tick what your child needs and add it all in one go."
+          />
 
           <div className="stage-tabs" role="group" aria-label="Choose a class">
             {schoolLists.map((s, i) => (
@@ -100,11 +106,11 @@ export default function SchoolList() {
           </p>
 
           <div className="list-actions">
-            <button type="button" className="btn btn-solid btn-wide" disabled={chosen.length === 0} onClick={addAll}>
+            <button type="button" className="btn btn-clay btn-wide" disabled={chosen.length === 0} onClick={addAll}>
               {chosen.length === 0 ? 'Tick an item to start' : 'Add to bag'}
             </button>
             {chosen.length > 0 && (
-              <a className="btn btn-quiet btn-wide" href={whatsappLink(whatsappMessage)} target="_blank" rel="noreferrer">
+              <a className="btn btn-sage btn-wide" href={whatsappLink(whatsappMessage)} target="_blank" rel="noreferrer">
                 <FaWhatsapp size={16} aria-hidden="true" /> Send on WhatsApp
               </a>
             )}

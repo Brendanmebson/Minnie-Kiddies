@@ -81,17 +81,17 @@ export default function ShopAll() {
 
   return (
     <>
-      <PageHead title={activeCategory === ALL ? 'Shop all' : activeCategory}>
+      <PageHead eyebrow="The shop" title={activeCategory === ALL ? 'Shop all' : activeCategory}>
         <p>{filtered.length} {filtered.length === 1 ? 'item' : 'items'}{searchTerm ? ` matching “${searchTerm}”` : ''}</p>
       </PageHead>
 
       <div className="wrap shop-tools">
-        <div className="chips" role="group" aria-label="Filter by category">
+        <div className="shelf-tabs" role="group" aria-label="Filter by category">
           {CATEGORIES.map((category) => (
             <button
               key={category}
               type="button"
-              className="chip"
+              className="shelf-tab"
               aria-pressed={activeCategory === category}
               onClick={() => setParam('category', category === ALL ? '' : category)}
             >
@@ -131,7 +131,7 @@ export default function ShopAll() {
           <div className="empty-state">
             <h2>Nothing on that shelf yet</h2>
             <p>Try a shorter word, or clear your filters and look around.</p>
-            <button type="button" className="btn btn-solid" onClick={clearFilters}>Clear filters</button>
+            <button type="button" className="btn btn-clay" onClick={clearFilters}>Clear filters</button>
           </div>
         )}
 

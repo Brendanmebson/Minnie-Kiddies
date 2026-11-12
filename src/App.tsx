@@ -13,12 +13,14 @@ import Collections from './pages/Collections'
 import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
 
-function ScrollToTop() {
-  const { pathname } = useLocation()
+function ScrollOnNavigate() {
+  const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior })
-  }, [pathname])
+    const target = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null
+    if (target) target.scrollIntoView()
+    else window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [pathname, hash])
 
   return null
 }
@@ -26,7 +28,7 @@ function ScrollToTop() {
 export default function App() {
   return (
     <CartProvider>
-      <ScrollToTop />
+      <ScrollOnNavigate />
       <a href="#main" className="skip-link">Skip to content</a>
       <Navbar />
       <main id="main" className="page-main">

@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { FaWhatsapp } from 'react-icons/fa'
-import { FiCheck } from 'react-icons/fi'
+import { FiCheck, FiInstagram, FiMapPin, FiPhone } from 'react-icons/fi'
 import PageHead from '../components/PageHead'
 import { site, whatsappLink } from '../data/site'
 import { usePageTitle } from '../hooks/usePageTitle'
@@ -40,16 +40,16 @@ export default function Contact() {
 
   return (
     <>
-      <PageHead title="Contact us">
-        <p>WhatsApp is the fastest way to reach the shop.</p>
+      <PageHead eyebrow="Contact" title="Say hello">
+        <p>WhatsApp is the fastest way to reach the shop. We're happy to help with sizes, school lists and class orders.</p>
       </PageHead>
 
       <section className="wrap contact-grid">
         <dl className="contact-ways">
-          <div><dt>WhatsApp</dt><dd><a href={whatsappLink()} target="_blank" rel="noreferrer">{site.phone}</a></dd></div>
-          <div><dt>Call</dt><dd><a href={site.phoneHref}>{site.phone}</a></dd></div>
-          <div><dt>Instagram</dt><dd><a href={site.instagramUrl} target="_blank" rel="noreferrer">{site.instagramHandle}</a></dd></div>
-          <div><dt>Visit</dt><dd>{site.location}</dd></div>
+          <div><span className="contact-icon"><FaWhatsapp aria-hidden="true" /></span><dt>WhatsApp</dt><dd><a href={whatsappLink()} target="_blank" rel="noreferrer">{site.phone}</a></dd></div>
+          <div><span className="contact-icon"><FiPhone aria-hidden="true" /></span><dt>Call</dt><dd><a href={site.phoneHref}>{site.phone}</a></dd></div>
+          <div><span className="contact-icon"><FiInstagram aria-hidden="true" /></span><dt>Instagram</dt><dd><a href={site.instagramUrl} target="_blank" rel="noreferrer">{site.instagramHandle}</a></dd></div>
+          <div><span className="contact-icon"><FiMapPin aria-hidden="true" /></span><dt>Visit</dt><dd>{site.location}</dd></div>
         </dl>
 
         {draft ? (
@@ -57,7 +57,7 @@ export default function Contact() {
             <span className="tick-box is-on" aria-hidden="true"><FiCheck size={14} strokeWidth={3.5} /></span>
             <h2>Your message is ready</h2>
             <p>Press send in WhatsApp to reach us.</p>
-            <a className="btn btn-solid" href={draft} target="_blank" rel="noreferrer">Open WhatsApp again</a>
+            <a className="btn btn-clay" href={draft} target="_blank" rel="noreferrer">Open WhatsApp again</a>
             <button type="button" className="text-button" onClick={() => setDraft('')}>Write another</button>
           </div>
         ) : (
@@ -79,7 +79,7 @@ export default function Contact() {
               <textarea id="contact-message" name="message" rows={4} value={form.message} onChange={handleField} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'contact-message-error' : undefined} />
               {errors.message && <span className="field-error" id="contact-message-error">{errors.message}</span>}
             </div>
-            <button type="submit" className="btn btn-solid btn-wide">
+            <button type="submit" className="btn btn-clay btn-wide">
               <FaWhatsapp size={16} aria-hidden="true" /> Continue to WhatsApp
             </button>
           </form>

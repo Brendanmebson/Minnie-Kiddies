@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { FiCheck, FiMinus, FiPlus, FiShoppingBag } from 'react-icons/fi'
+import { FiCheck, FiCreditCard, FiMinus, FiPlus, FiShoppingBag, FiTruck } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
 import ProductArt from '../components/ProductArt'
 import ProductCard from '../components/ProductCard'
 import { useCart } from '../context/cart'
 import { getProductById, shopAllProducts, type Product } from '../data/products'
-import { whatsappLink } from '../data/site'
+import { formatNaira, site, whatsappLink } from '../data/site'
+import SectionHeading from '../components/SectionHeading'
 import { usePageTitle } from '../hooks/usePageTitle'
 import NotFound from './NotFound'
 
@@ -53,6 +54,7 @@ function ProductView({ product }: { product: Product }) {
         </figure>
 
         <div className="pd-info">
+          <p className="eyebrow">{product.category}{product.isNew ? ' · New' : ''}</p>
           <h1>{product.name}</h1>
           <p className="pd-price">{product.price}</p>
           <p className="pd-desc">{product.description}</p>
@@ -72,11 +74,16 @@ function ProductView({ product }: { product: Product }) {
               <span aria-live="polite">{qty}</span>
               <button type="button" onClick={() => setQty((q) => q + 1)} aria-label="Increase quantity"><FiPlus size={18} /></button>
             </div>
-            <button type="button" className="btn btn-solid btn-grow" onClick={handleAdd}>
+            <button type="button" className="btn btn-clay btn-grow" onClick={handleAdd}>
               {added ? <FiCheck size={20} aria-hidden="true" /> : <FiShoppingBag size={20} aria-hidden="true" />}
               {added ? 'In your bag' : 'Add to bag'}
             </button>
           </div>
+
+          <ul className="pd-perks">
+            <li><FiTruck aria-hidden="true" /> {formatNaira(site.deliveryFee)} delivery to {site.deliveryStates.length} states</li>
+            <li><FiCreditCard aria-hidden="true" /> Pay by transfer or on delivery</li>
+          </ul>
 
           <h2>What you get</h2>
           <ul className="pd-features">
@@ -89,7 +96,7 @@ function ProductView({ product }: { product: Product }) {
 
       {related.length > 0 && (
         <section className="wrap section related">
-          <h2 className="section-title">Goes well with</h2>
+          <SectionHeading ornament eyebrow="Complete the set" title="Goes well with" />
           <div className="product-grid">
             {related.map((p) => <ProductCard key={p.id} product={p} />)}
           </div>

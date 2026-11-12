@@ -1,20 +1,24 @@
 import { Link } from 'react-router-dom'
-import { FiArrowRight, FiChevronDown } from 'react-icons/fi'
+import { FiArrowRight, FiPlus } from 'react-icons/fi'
+import { FaWhatsapp } from 'react-icons/fa'
+import HeroSlider from '../components/HeroSlider'
+import Marquee from '../components/Marquee'
 import ProductArt from '../components/ProductArt'
 import ProductCard from '../components/ProductCard'
 import SchoolList from '../components/SchoolList'
+import SectionHeading from '../components/SectionHeading'
+import { Rainbow } from '../components/Decor'
 import { collections, getProductById, inCollection, shopAllProducts } from '../data/products'
-import { formatNaira, site } from '../data/site'
+import { photos } from '../data/photos'
+import { formatNaira, site, whatsappLink } from '../data/site'
 import { usePageTitle } from '../hooks/usePageTitle'
-import pencils from '../assets/photos/colouring-pencils.jpg'
-import toysOnFloor from '../assets/photos/toys-on-floor.jpg'
 
 const FAVOURITES = ['rocket-set-1', 'mermaid-set-4', 'sneaker-girl-7', 'sunny-set-14', 'drink-01-10', 'princess-set-3', 'art-01-11', 'shoe-boy-8']
 
 const howItWorks = [
-  { title: 'Order your way', body: 'Fill your bag here and your order arrives in our WhatsApp chat, ready to confirm. Class or school orders are welcome.' },
-  { title: 'Pay how you like', body: 'Choose bank transfer, with details sent in the chat, or pay cash on delivery.' },
-  { title: `Delivery for ${formatNaira(site.deliveryFee)}`, body: `One flat fee to ${site.deliveryStates.length} states, including ${site.deliveryStates.slice(0, 3).join(', ')}.` },
+  { title: 'Fill your bag', body: 'Pick from the shelves or tick off the school list. Class orders are welcome too.' },
+  { title: 'Send it on WhatsApp', body: 'Your order lands in our chat, ready to confirm. Pay by transfer or on delivery.' },
+  { title: `Delivered for ${formatNaira(site.deliveryFee)}`, body: `One flat fee to ${site.deliveryStates.length} states, including ${site.deliveryStates.slice(0, 3).join(', ')}.` },
 ]
 
 const questions = [
@@ -32,28 +36,17 @@ export default function Home() {
 
   return (
     <>
-      <section className="wrap hero">
-        <div className="hero-panel">
-          <div className="hero-copy">
-            <h1>Everything on the school list</h1>
-            <p>Bags, shoes, lunch kits and stationery for Nursery to Secondary, from our shop on Lagos Island.</p>
-            <div className="hero-actions">
-              <Link to="/shop" className="btn btn-solid">Shop all</Link>
-              <a href="#school-list" className="btn btn-quiet">Tick off your list</a>
-            </div>
-          </div>
-          <img src={toysOnFloor} width={1500} height={1001} alt="A child sitting on a carpet among colourful building blocks and toys" />
-        </div>
-      </section>
+      <HeroSlider />
+      <Marquee />
 
-      <section className="wrap section">
-        <h2 className="section-title">Shop by category</h2>
+      <section className="wrap section" aria-labelledby="category-title">
+        <SectionHeading id="category-title" ornament eyebrow="Shop by shelf" title="Find it in a tap" />
         <div className="category-grid">
-          {collections.map((category) => {
+          {collections.map((category, i) => {
             const count = shopAllProducts.filter((p) => inCollection(p, category.filter)).length
             return (
               <Link key={category.id} to={`/shop?category=${encodeURIComponent(category.filter)}`} className="category">
-                <span className="category-plate">
+                <span className={`category-plate tint-${i % 4}`}>
                   <ProductArt product={getProductById(category.sample)!} decorative />
                 </span>
                 <span className="category-name">{category.label}</span>
@@ -64,9 +57,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="wrap section">
+      <section className="wrap section" aria-labelledby="favourites-title">
         <div className="section-head">
-          <h2 className="section-title">This term's favourites</h2>
+          <SectionHeading id="favourites-title" align="start" eyebrow="Loved this term" title="Class favourites" />
           <Link to="/shop" className="text-link">View all <FiArrowRight size={16} aria-hidden="true" /></Link>
         </div>
         <div className="product-grid">
@@ -74,40 +67,75 @@ export default function Home() {
         </div>
       </section>
 
-      <SchoolList />
-
-      <section className="wrap section" aria-labelledby="how-title">
-        <h2 className="section-title" id="how-title">How ordering works</h2>
-        <div className="how-grid">
-          {howItWorks.map(({ title, body }) => (
-            <div key={title}>
-              <h3>{title}</h3>
-              <p>{body}</p>
-            </div>
-          ))}
+      <section className="wrap section welcome" aria-labelledby="welcome-title">
+        <div className="welcome-copy">
+          <p className="eyebrow">Welcome to Minnie Kiddies</p>
+          <h2 id="welcome-title">Ready for a brand new term</h2>
+          <div className="btn-row">
+            <Link to="/shop" className="btn btn-clay">Shop now</Link>
+            <a href="#school-list" className="btn btn-sage">Tick off your list</a>
+          </div>
         </div>
+        <img src={photos.readBlocks.src} width={photos.readBlocks.width} height={photos.readBlocks.height} alt={photos.readBlocks.alt} loading="lazy" />
       </section>
 
-      <section className="wrap section story">
-        <img src={pencils} width={1600} height={1066} alt="Colouring pencils arranged in a wheel of colour" loading="lazy" />
-        <div>
-          <h2 className="section-title">Dear parent,</h2>
-          <p>
-            Minnie Kiddies started with one goal: make school prep exciting instead of stressful.
-            Every backpack, lunch box and pair of shoes is chosen for durability and safety first,
-            then for the fun designs kids pick out themselves.
+      <SchoolList />
+
+      <section className="wrap section note-split" aria-labelledby="note-title">
+        <img src={photos.colouringPencils.src} width={photos.colouringPencils.width} height={photos.colouringPencils.height} alt={photos.colouringPencils.alt} loading="lazy" />
+        <div className="note-card">
+          <Rainbow className="note-rainbow" />
+          <h2 id="note-title" className="sr-only">A note from the shop</h2>
+          <blockquote>
+            <p>“So bring the school list. We'll take it from there.”</p>
+          </blockquote>
+          <p className="note-sign">Minnie Kiddies, Lagos Island</p>
+          <p className="note-body">
+            We started with one goal: make school prep exciting instead of stressful. Every bag, lunch box and pair
+            of shoes is chosen for durability and safety first, then for the designs kids pick out themselves.
           </p>
-          <p>So bring the list. We will take it from there.</p>
           <Link to="/about" className="text-link">Read our story <FiArrowRight size={16} aria-hidden="true" /></Link>
         </div>
       </section>
 
-      <section className="wrap section faq">
-        <h2 className="section-title">Questions parents ask</h2>
+      <section className="section how" aria-labelledby="how-title">
+        <div className="wrap">
+          <SectionHeading
+            id="how-title"
+            ornament
+            eyebrow="Simple as one, two, three"
+            title="How ordering works"
+            lead="No accounts, no card details. Your order comes straight to us on WhatsApp."
+          />
+          <ol className="how-steps">
+            {howItWorks.map(({ title, body }, i) => (
+              <li key={title}>
+                <span className="how-num">{i + 1}</span>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="how-cta">
+            <a className="btn btn-clay" href={whatsappLink("Hello Minnie Kiddies! I'd like to place an order.")} target="_blank" rel="noreferrer">
+              <FaWhatsapp size={16} aria-hidden="true" /> Chat with us
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="wrap section faq" id="faq" aria-labelledby="faq-title">
+        <SectionHeading
+          id="faq-title"
+          align="start"
+          eyebrow="Good to know"
+          title="Questions parents ask"
+          lead={<>Can't see yours? <Link to="/contact" className="inline-link">Send us a note</Link>.</>}
+        />
         <div>
           {questions.map(({ q, a }) => (
             <details key={q}>
-              <summary>{q}<FiChevronDown size={18} aria-hidden="true" /></summary>
+              <summary>{q}<FiPlus size={18} aria-hidden="true" /></summary>
               <p>{a}</p>
             </details>
           ))}

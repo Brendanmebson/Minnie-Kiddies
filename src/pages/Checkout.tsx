@@ -79,12 +79,12 @@ export default function Checkout() {
 
   if (sentLink) {
     return (
-      <PageHead title="One last step" size="state">
+      <PageHead eyebrow="Almost done" title="One last step" size="state">
         <p>
           Press send in WhatsApp so your order reaches us. We'll confirm it on {form.phone.trim()}
           {method === 'transfer' ? ' and send the bank details in the chat.' : '.'}
         </p>
-        <a className="btn btn-solid" href={sentLink} target="_blank" rel="noreferrer">
+        <a className="btn btn-clay" href={sentLink} target="_blank" rel="noreferrer">
           <FaWhatsapp size={20} aria-hidden="true" /> Open WhatsApp again
         </a>
       </PageHead>
@@ -93,9 +93,12 @@ export default function Checkout() {
 
   if (items.length === 0) {
     return (
-      <PageHead title="Your bag is empty" size="state">
+      <PageHead eyebrow="Your bag" title="Your bag is empty" size="state">
         <p>Tick your school list or browse the shelves to fill it up.</p>
-        <Link to="/shop" className="btn btn-solid">Go shopping</Link>
+        <div className="btn-row">
+          <Link to="/shop" className="btn btn-clay">Go shopping</Link>
+          <Link to="/#school-list" className="btn btn-sage">Tick off a school list</Link>
+        </div>
       </PageHead>
     )
   }
@@ -114,7 +117,9 @@ export default function Checkout() {
 
   return (
     <>
-      <PageHead title="Your bag" />
+      <PageHead eyebrow="Checkout" title="Your bag">
+        <p>Check your list, tell us where it's going, and send the order on WhatsApp.</p>
+      </PageHead>
 
       <div className="wrap checkout">
         <section className="receipt" aria-labelledby="receipt-title">
@@ -191,7 +196,7 @@ export default function Checkout() {
             ))}
           </fieldset>
 
-          <button type="submit" className="btn btn-solid btn-wide">
+          <button type="submit" className="btn btn-clay btn-wide">
             <FaWhatsapp size={20} aria-hidden="true" /> Order on WhatsApp · {formatNaira(grandTotal)}
           </button>
           <p className="checkout-note">This opens WhatsApp with your order ready to send.</p>
