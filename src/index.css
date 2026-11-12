@@ -1338,28 +1338,8 @@ details p {
 .footer-legal .logo-name { font-size: 0.9375rem; }
 .footer-legal .logo-sub { display: none; }
 
-.credits { border: 0; margin-left: auto; }
-.credits summary { min-height: 0; padding: 4px 0; font-weight: 400; text-decoration: underline; text-underline-offset: 3px; }
-
-.credits ul {
-  position: absolute;
-  right: var(--gutter);
-  bottom: 72px;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: min(440px, calc(100vw - 2 * var(--gutter)));
-  padding: 16px 20px;
-  background: var(--paper);
-  box-shadow: 0 10px 32px rgba(47, 42, 38, 0.14);
-  font-size: 0.75rem;
-  line-height: 1.5;
-}
-
-.credits a { text-decoration: underline; text-underline-offset: 2px; }
-
 .to-top {
+  margin-left: auto;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1384,7 +1364,6 @@ details p {
 @media (max-width: 860px) {
   .footer-gallery ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .credits { margin-left: 0; }
 }
 
 .chat-widget {
@@ -2184,4 +2163,46 @@ details p {
 
 @media (max-width: 420px) {
   .contact-ways { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- Made by credit ---------- */
+
+.coffee-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: #FFDD00;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.coffee-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.coffee-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+
+.made-by {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.made-by a { font-weight: 700; color: var(--ink); }
+.made-by + .to-top { margin-left: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .coffee-btn { transition: none; }
+}
+
+@media (max-width: 760px) {
+  .coffee-btn { display: flex; width: max-content; margin: 0 0 12px auto; }
+}
+
+@media print {
+  .coffee-btn, .made-by { display: none; }
 }

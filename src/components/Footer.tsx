@@ -3,6 +3,7 @@ import { FiArrowUp } from 'react-icons/fi'
 import { FaInstagram, FaWhatsapp } from 'react-icons/fa'
 import Logo from './Logo'
 import { CloudEdge } from './Decor'
+import { CoffeeButton, MadeByCredit } from './MadeBy'
 import { allPhotos } from '../data/photos'
 import { site, whatsappLink } from '../data/site'
 import { scrollToTop } from '../hooks/motion'
@@ -57,16 +58,8 @@ export default function Footer() {
       <div className="wrap footer-legal">
         <Link to="/" aria-label="Minnie Kiddies home"><Logo /></Link>
         <span>© {new Date().getFullYear()} Minnie Kiddies. Pay by bank transfer or on delivery.</span>
-        <details className="credits">
-          <summary>Photo credits</summary>
-          <ul>
-            {allPhotos.map((photo) => (
-              <li key={photo.src}>
-                <a href={photo.source} target="_blank" rel="noreferrer">{photo.alt}</a>, {photo.credit}, via Wikimedia Commons
-              </li>
-            ))}
-          </ul>
-        </details>
+        <CoffeeButton />
+        <MadeByCredit />
         <button type="button" className="to-top" onClick={scrollToTop}>
           <FiArrowUp size={16} aria-hidden="true" /> Top
         </button>
